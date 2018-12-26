@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B865D1F-2443-4E81-907D-71F7F89482FD}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Sitecore.LogAnalyzer.MemoryDiagnostics.Connector</RootNamespace>
+    <AssemblyName>Sitecore.LogAnalyzer.MemoryDiagnostics.Connector</AssemblyName>
+    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Diagnostics.Runtime">
+      <HintPath>..\..\References\Microsoft.Diagnostics.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.Kernel, Version=10.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\SC.Sitecore.Kernel.8.2.6\lib\Sitecore.Kernel.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Sitecore.LogAnalyzer">
+      <HintPath>..\..\References\Sitecore.LogAnalyzer.exe</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.LogAnalyzer.Common">
+      <HintPath>..\..\References\Sitecore.LogAnalyzer.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.LogAnalyzer.Kernel">
+      <HintPath>..\..\References\Sitecore.LogAnalyzer.Kernel.dll</HintPath>
+    </Reference>
+    <Reference Include="Sitecore.MemoryDiagnostics">
+      <HintPath>..\..\References\Sitecore.MemoryDiagnostics.dll</HintPath>
+    </Reference>
+    <Reference Include="SitecoreMemoryInspectionKit.Core">
+      <HintPath>..\..\References\SitecoreMemoryInspectionKit.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\BaseClrObjectTransformProvider.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\EmptyClrObjectTransformator.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\FlattenObjectTransformProvider.cs" />
+    <Compile Include="ClrThreadTransformators\IClrThreadTransformator.cs" />
+    <Compile Include="ConnectionDetails\MemoryDumpFileBasedConnectionWithName.cs" />
+    <Compile Include="DependencyInjection\HeapBasedMemoryDumpAnalysisModule.cs" />
+    <Compile Include="DependencyInjection\ThreadBasedMemoryDumpAnalysisModule.cs" />
+    <Compile Include="DumpProcessors\BaseDumpProcessor.cs" />
+    <Compile Include="DumpProcessors\ClrThreadDumpProcessor.cs" />
+    <Compile Include="DumpProcessors\NamedFilterDrivenProcessor.cs" />
+    <Compile Include="DumpProcessors\DiDumpProcessor.cs" />
+    <Compile Include="Facades\LogAnalyzer\BaseSCLAFacade.cs" />
+    <Compile Include="Facades\LogAnalyzer\DefaultSLCAFacade.cs" />
+    <Compile Include="Facades\LogAnalyzer\ILogAnalyzerFacade.cs" />
+    <Compile Include="Facades\ObjectEnumeration\BaseObjectEnumerationConnectionDetails.cs" />
+    <Compile Include="Facades\ObjectEnumeration\IEnumeratiorConnection.cs" />
+    <Compile Include="Facades\ObjectEnumeration\MdBasedEnumerationConnection.cs" />
+    <Compile Include="Facades\ObjectEnumeration\MdConnectionNoEnumerator.cs" />
+    <Compile Include="DumpProcessors\AbstractDumpProcessor.cs" />
+    <Compile Include="DumpProcessors\DefaultDumpProcessor.cs" />
+    <Compile Include="DumpProcessors\DumpHeapStatProcessor.cs" />
+    <Compile Include="DumpProcessors\LiveDeadHeapStatsProcessor.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\Caches\PrefetchCacheEntryTransformProvider.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\Caches\Statistics\MeasureImpactOfRemovingLang.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\ClrObjectTranformProvider.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\Caches\CacheEntryTransformProvider.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\HaveChildEntriesTransformationProvider.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\MongoConnectionPoolTransformProvider.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\ThreadStackObjects.cs" />
+    <Compile Include="ClrObjLogEntry.cs" />
+    <Compile Include="DependencyInjection\BaseMemoryDumpAnalysisModule.cs" />
+    <Compile Include="EmptyContextFactory.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\Interfaces\100 IClrObjectTransformator.cs" />
+    <Compile Include="CaptionManagers\ClrObjCaptionManager.cs" />
+    <Compile Include="CaptionManagers\SitecoreItemCacheGrouper.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\LogEntryFieldInitialization\ScCacheInitLogEntryFields.cs" />
+    <Compile Include="ClrObjToLogEntryTransformations\Interfaces\120 IInitLogEntryFields.cs" />
+    <Compile Include="HeapStat\DiePercentBasedLevel.cs" />
+    <Compile Include="HeapStat\DumpHeapStat.cs" />
+    <Compile Include="HeapStat\HeapStatEntry.cs" />
+    <Compile Include="HeapStat\ISetStatsLevel.cs" />
+    <Compile Include="HeapStat\LiveDeadHeapStat.cs" />
+    <Compile Include="HeapStat\LiveDeadHeapStatEntry.cs" />
+    <Compile Include="LogEntryFieldInitializer.cs" />
+    <Compile Include="LongRunningOperationWatcher.cs" />
+    <Compile Include="ConnectionDetails\MemoryDumpConnectionDetails.cs" />
+    <Compile Include="MemoryUsageWatcher.cs" />
+    <Compile Include="MemoryDumpSource\IMemoryDumpSource.cs" />
+    <Compile Include="UI\DumpDetailsWithText.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\DumpDetailsWithText.Designer.cs">
+      <DependentUpon>DumpDetailsWithText.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UI\PickDumpDetails.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\PickDumpDetails.Designer.cs">
+      <DependentUpon>PickDumpDetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AbstractDumpInvoker.cs" />
+    <Compile Include="Example\DiBinding.cs" />
+    <Compile Include="DumpProcessors\DumpProcessorBase.cs" />
+    <Compile Include="Example\Invoker.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Resources\Image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\DumpDetailsWithText.resx">
+      <DependentUpon>DumpDetailsWithText.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\PickDumpDetails.resx">
+      <DependentUpon>PickDumpDetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>Sitecore.SCLA.MemoryDiagnostics</CustomToolNamespace>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="UI\Resources\Icon.JPG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FilteredObjectsProviders\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
