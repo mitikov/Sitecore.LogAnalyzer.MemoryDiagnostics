@@ -14,6 +14,6 @@
     /// </summary>
     public static readonly LogEntryFieldInitializer Singleton = new LogEntryFieldInitializer();
 
-    public virtual void ApplyCustomLogicOnLogEntry(ClrObjLogEntry entry) => return;
+    public virtual void ApplyCustomLogicOnLogEntry(ClrObjLogEntry entry) { }
   }
 }
