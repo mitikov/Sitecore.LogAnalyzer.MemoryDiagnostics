@@ -1,4 +1,4 @@
-﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer
+﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter
 {
   partial class PickObjectToPrint
   {

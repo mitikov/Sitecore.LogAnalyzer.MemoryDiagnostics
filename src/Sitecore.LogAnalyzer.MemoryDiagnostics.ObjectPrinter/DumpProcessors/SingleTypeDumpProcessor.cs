@@ -1,4 +1,4 @@
-﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer.DumpProcessors
+﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter.DumpProcessors
 {
   using Microsoft.Diagnostics.Runtime;
   using Sitecore.LogAnalyzer;
@@ -10,7 +10,7 @@
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.DumpProcessors;
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.Facades;
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.Facades.ObjectEnumeration;
-  using Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer.ConnectionDetails;
+  using Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter.ConnectionDetails;
 
   /// <summary>
   /// Outputs clrObjects of only one type.
@@ -27,7 +27,7 @@
     protected override IEnumeratiorConnection ClrObjectEnumerator => clrObjectEnumerationFacade;
 
     /// <summary>
-    /// Arrange
+    /// Arranges <see cref="ClrObjectEnumerator"/> to load from heap only type carried in <paramref name="connection"/>.
     /// </summary>
     /// <param name="connection"></param>
     /// <returns></returns>

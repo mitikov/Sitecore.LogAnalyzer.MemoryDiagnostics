@@ -1,22 +1,25 @@
-﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer
+﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter
 {
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using System.Reflection;
   using System.Windows.Forms;
 
   using Sitecore.DumpModule.Common.UI;
+  using Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter.ConnectionDetails;
   using Sitecore.MemoryDiagnostics.Attributes;
   using Sitecore.MemoryDiagnostics.Models.BaseMappingModel;
   using Sitecore.MemoryDiagnostics.Utils;
-  using Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer.ConnectionDetails;
 
+  /// <summary>
+  /// Setups <see cref="MemoryDumpConnectionWithType"/> based on user type to inspect selection.
+  /// <para>All assemblies loaded into domain that are decorated with <see cref="CarriesMemoryDumpAnalysisLogic"/> inspected for defined models.</para>
+  /// <para>Models in turn, contain target type they represent - via <see cref="ModelMappingAttribute"/> - these types are provided for user to pick from.</para>
+  /// </summary>
   public partial class PickObjectToPrint : PickDumpDetails
   {
-    public PickObjectToPrint()
-    {
-      InitializeComponent();
-    }
+    public PickObjectToPrint() => InitializeComponent();
 
     private void PickObjectToPrint_Load(object sender, EventArgs e)
     {
@@ -26,33 +29,28 @@
 
     private void FillTreeWithTypes()
     {
-      var types = FindTypes();
+      var types = LoadModelMappingTypes(AppDomain.CurrentDomain.GetAssemblies(), assemblyAttributeFilter: typeof(CarriesMemoryDumpAnalysisLogic), modelMappingAttributeFilter: typeof(ModelMappingAttribute));
       var namespaces = Namespace.FromStrings(types);
 
       AddNamespaces(typeTreeView.Nodes, namespaces);
     }
 
-    private List<Type> FindTypes()
+    /// <summary>
+    /// Finds model types in loaded assemblies.
+    /// <para>Processes only assemblies that are decorated with <paramref name="assemblyAttributeFilter"/>.</para>
+    /// </summary>
+    /// <param name="assemblyAttributeFilter"></param>
+    /// <param name="modelMappingAttributeFilter"></param>
+    /// <returns></returns>
+    private IEnumerable<Type> LoadModelMappingTypes(IEnumerable<Assembly> assemblies, Type assemblyAttributeFilter, Type modelMappingAttributeFilter)
     {
-      var types = new List<Type>(100 * 10);
-      foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies().Where(ass => ass.IsDefined(typeof(CarriesMemoryDumpAnalysisLogic), false)))
-      {
-        try
-        {
-          var candidates = from type in assembly.GetExportedTypes()
-                           where !type.IsInterface
-                           where !type.IsAbstract
-                           where typeof(ClrObjectMappingModel).IsAssignableFrom(type)
-                           where Attribute.IsDefined(type, typeof(ModelMappingAttribute), inherit: true)
-                           select type;
-          types.AddRange(candidates);
-        }
-        catch (Exception ex)
-        {
-          //Context.LogError("Failed to load types", ex);
-        }
-      }
-      return types;
+      return from assembly in assemblies
+             where assembly.IsDefined(assemblyAttributeFilter, inherit: false)
+             from exportedType in assembly.GetExportedTypes()
+             where !exportedType.IsAbstract && !exportedType.IsInterface
+             where typeof(ClrObjectMappingModel).IsAssignableFrom(exportedType)
+             where Attribute.IsDefined(exportedType, modelMappingAttributeFilter, inherit: true)
+             select exportedType;
     }
 
     protected virtual void AddNamespaces(TreeNodeCollection nodeCollection, IEnumerable<Namespace> namespaces)
@@ -62,7 +60,7 @@
         var node = new TreeNode(aNamespace.NameOnLevel)
         {
           Tag = aNamespace
-        };        
+        };
         nodeCollection.Add(node);
         if (aNamespace.Subnamespaces.Count > 0)
         {
@@ -97,8 +95,6 @@
 
       //TODO: override;
     }
-
-
 
     private void typeTreeView_AfterSelect(object sender, TreeViewEventArgs e)
     {

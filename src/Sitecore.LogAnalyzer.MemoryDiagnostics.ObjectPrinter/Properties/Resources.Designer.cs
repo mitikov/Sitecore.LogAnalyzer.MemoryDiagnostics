@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer.Properties {
+namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

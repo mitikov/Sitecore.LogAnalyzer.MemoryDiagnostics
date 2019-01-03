@@ -1,4 +1,4 @@
-﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer
+﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter
 {
   using System;
   using System.Collections.Generic;
@@ -8,18 +8,14 @@
 
   public class Namespace : IDictionary<string, Namespace>
   {
-    #region Fields
-
     private IDictionary<string, Namespace> subNamespaces;
-
-    #endregion
-
-    #region Constructors
 
     private Namespace(string nameOnLevel, Namespace parent)
     {
       if (string.IsNullOrWhiteSpace(nameOnLevel))
+      {
         throw new ArgumentException(nameof(nameOnLevel));
+      }
 
       Parent = parent;
       NameOnLevel = nameOnLevel;
@@ -31,13 +27,32 @@
       }
     }
 
-    private Namespace(string nameOfLevel)
-      : this(nameOfLevel, null)
-    {
 
+    public readonly string NameOnLevel;
+
+    public Type ConstructedType
+    {
+      get;
+      protected set;
     }
 
-    #endregion
+    public string FullName => Parent == null ? NameOnLevel : $"{Parent.FullName}.{NameOnLevel}";
+
+    private Namespace _parent;
+
+    public Namespace Parent
+    {
+      get => _parent;
+      private set
+      {
+        if (Parent != null)
+        {
+          Parent.Remove(NameOnLevel);
+        }
+
+        _parent = value;
+      }
+    }
 
 
     #region Static
@@ -124,38 +139,6 @@
 
     #endregion
 
-    #region Properties
-
-    public readonly string NameOnLevel;
-
-    public Type ConstructedType
-    {
-      get;
-      protected set;
-    }
-
-    public string FullName => Parent == null ? NameOnLevel : $"{Parent.FullName}.{NameOnLevel}";
-
-    private Namespace _Parent;
-
-    public Namespace Parent
-    {
-      get
-      {
-        return _Parent;
-      }
-      private set
-      {
-        if (Parent != null)
-          Parent.Remove(NameOnLevel);
-
-        _Parent = value;
-      }
-    }
-
-    #endregion
-
-
     #region IDictionary implementation
 
     public void Add(string key, Namespace value)
@@ -166,17 +149,16 @@
       subNamespaces.Add(key, value);
     }
 
-    public bool ContainsKey(string key)
-      => subNamespaces.ContainsKey(key);
+    public bool ContainsKey(string key) => subNamespaces.ContainsKey(key);
 
     public ICollection<string> Keys => subNamespaces.Keys;
 
     public bool Remove(string key)
     {
       if (!ContainsKey(key))
-        throw new KeyNotFoundException();
+        throw new KeyNotFoundException(key);
 
-      this[key]._Parent = null;
+      this[key]._parent = null;
 
       return subNamespaces.Remove(key);
     }
@@ -214,7 +196,7 @@
     {
       foreach (var subNamespace in subNamespaces.Select(kv => kv.Value))
       {
-        subNamespace._Parent = null;
+        subNamespace._parent = null;
       }
 
       subNamespaces.Clear();
@@ -238,10 +220,7 @@
 
     #endregion
 
-    #region Overrides
 
     public override string ToString() => FullName;
-
-    #endregion
   }
 }

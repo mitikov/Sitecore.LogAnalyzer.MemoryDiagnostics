@@ -1,7 +1,6 @@
-﻿using System;
-
-namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer.ConnectionDetails
+﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter.ConnectionDetails
 {
+  using System;
   using Sitecore.LogAnalyzer;
   using Sitecore.LogAnalyzer.Attributes;
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ConnectionDetails;

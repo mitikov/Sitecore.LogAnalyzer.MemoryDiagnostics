@@ -1,31 +1,16 @@
-﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer
+﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter
 {
   using System.Drawing;
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector;
 
   public class Invoker : AbstractDumpInvoker
   {
-    #region Fields
+    public static readonly string ObjectPrinterModuleName = "Object printer";
 
-    public static readonly string DuplicateObjectFinderModuleName = "Model viewer";
-
-    #endregion
-
-    #region Constructors
-
-    public Invoker()
-    {
-      PickDumpDetailsForm = new PickObjectToPrint();
-    }
-
-    #endregion
-
-    #region Public properties
+    public Invoker() => PickDumpDetailsForm = new PickObjectToPrint();
 
     public override Image Image => Properties.Resources.Emblem;
 
-    public override string Name => DuplicateObjectFinderModuleName;
-
-    #endregion
+    public override string Name => ObjectPrinterModuleName; 
   }
 }

@@ -7,8 +7,8 @@
     <ProjectGuid>{9BA15756-719B-44BA-91A9-CD74FD76608B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer</RootNamespace>
-    <AssemblyName>Sitecore.LogAnalyzer.MemoryDiagnostics.ModelViewer</AssemblyName>
+    <RootNamespace>Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter</RootNamespace>
+    <AssemblyName>Sitecore.LogAnalyzer.MemoryDiagnostics.ObjectPrinter</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConnectionDetails\MdConnectionWithTypeToLoop.cs" />
-    <Compile Include="HeapObjectPrinterDiBindings.cs" />
+    <Compile Include="SingleHeapTypeAnalysisModule.cs" />
     <Compile Include="DumpProcessors\SingleTypeDumpProcessor.cs" />
     <Compile Include="Invoker.cs" />
     <Compile Include="NamespaceParser.cs" />
