@@ -3,12 +3,11 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTrans
   using System;
   using Interfaces;
   using Sitecore.MemoryDiagnostics.Models.FallBack.SitecoreRelated;
-  using Sitecore.Diagnostics;
   using Sitecore.LogAnalyzer.Attributes;
   using Sitecore.LogAnalyzer.Models;
 
   /// <summary>
-  /// Sorts entries by fill level, and changes <see cref="Sitecore.LogAnalyzer.Models.LogLevel"/> according to cache filled percent.
+  /// Sorts entries by fill level, and changes <see cref="Models.LogLevel"/> according to cache filled percent.
   /// </summary>
   public class ScCacheInitLogEntryFields : IInitLogEntryFields
   {

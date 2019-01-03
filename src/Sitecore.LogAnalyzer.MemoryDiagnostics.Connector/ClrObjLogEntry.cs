@@ -8,7 +8,6 @@
   using Sitecore.MemoryDiagnostics;
   using Sitecore.MemoryDiagnostics.ModelMetadataInterfaces;
   using Sitecore.MemoryDiagnostics.Models.BaseMappingModel;
-  using SitecoreMemoryInspectionKit.Core.AppHelpers;
   using SitecoreMemoryInspectionKit.Core.ClrHelpers;
 
   /// <summary>
@@ -29,25 +28,6 @@
     /// </summary>
     public ClrObjLogEntry Parent;
     #endregion
-
-    #region properties
-    /// <summary>
-    /// Gets the address.
-    /// </summary>
-    /// <value>
-    /// The address.
-    /// </value>
-    public ulong Address => Model?.Obj.Address ?? ulong.MinValue;
-
-    /// <summary>
-    /// Indicates if 
-    /// </summary>
-    public bool HasMappingModel => Model != null;
-
-    public ClrObject? ClrObject => Model?.Obj;   
-
-    #endregion
-
     #region Constructor
     /// <summary>
     /// Initializes a new instance of the <see cref="ClrObjLogEntry" /> class.
@@ -66,6 +46,21 @@
       }
     }
     #endregion
+
+    /// <summary>
+    /// Gets the address.
+    /// </summary>
+    /// <value>
+    /// The address.
+    /// </value>
+    public ulong Address => Model?.Obj.Address ?? ulong.MinValue;
+
+    /// <summary>
+    /// Indicates if 
+    /// </summary>
+    public bool HasMappingModel => Model != null;
+
+    public ClrObject? ClrObject => Model?.Obj;
 
     #region Public API
 
@@ -118,7 +113,7 @@
 
         using (new MemoryFailPoint(sizeInMegabytes: 500))
         {
-          using (new MemoryUsageWatcher("{0} obj {1} model".FormatWith(Model.Obj.HexAddress, Model.ModelOfTypeName)))
+          using (new MemoryUsageWatcher($"{Model.Obj.HexAddress} obj {Model.ModelOfTypeName} model"))
           {
             var modelText = Model.ToString();
             Text = string.IsNullOrEmpty(modelText) ? "[Model yielded No Text]" : modelText.Trim();
@@ -141,7 +136,7 @@
           Debugger.Break();
         }
 
-        throw new Exception("{0} not enough memory".FormatWith(Model.Obj.HexAddress), ex);
+        throw new Exception($"{Model.Obj.HexAddress} not enough memory", ex);
       }
       catch (OutOfMemoryException ex)
       {
@@ -150,13 +145,13 @@
           Debugger.Break();
         }
 
-        throw new Exception("{0} not enough memory".FormatWith(Model.Obj.HexAddress), ex);
+        throw new Exception($"{Model.Obj.HexAddress} not enough memory", ex);
       }
 
       //if (Model is NoConverterForType)
       //Level =LogLevel.DEBUG;
 
-      EventSource = Model.Obj.Address.ToString("X") + " [" + Model.GetType().Name + "]";
+      EventSource = $"{Model.Obj.HexAddress} [{Model.GetType().Name}]";
 
       LinesCount = StringUtil.LinesCount(Text);
     }
@@ -165,10 +160,7 @@
 
     #region ToString Override
 
-    public override string ToString()
-    {
-      return Caption + Environment.NewLine + Text;
-    }
+    public override string ToString() => $"{Caption}{Environment.NewLine}{Text}";
 
     #endregion
 
@@ -183,10 +175,7 @@
       return other.Address == Address;
     }
 
-    bool IEquatable<ClrObjLogEntry>.Equals(ClrObjLogEntry other)
-    {
-      return Equals(other);
-    }
+    bool IEquatable<ClrObjLogEntry>.Equals(ClrObjLogEntry other) => Equals(other);
 
     public override bool Equals(object obj)
     {
@@ -208,12 +197,12 @@
     public static bool operator ==(ClrObjLogEntry a, ClrObjLogEntry b)
     {
       // If both are null, or both are same instance, return true.
-      if (object.ReferenceEquals(a, b))
+      if (ReferenceEquals(a, b))
       {
         return true;
       }
 
-      if (((object)a == null) || ((object)b == null))
+      if ((a is null) || (b is null))
       {
         return false;
       }

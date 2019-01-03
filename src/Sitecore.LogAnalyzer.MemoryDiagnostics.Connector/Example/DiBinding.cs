@@ -13,7 +13,6 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector
   /// </summary>
   public class DiBindings : BaseMemoryDumpAnalysisModule
   {
-
     protected override void RegisterLogAnalyzerSpecific()
     {
       base.RegisterLogAnalyzerSpecific();

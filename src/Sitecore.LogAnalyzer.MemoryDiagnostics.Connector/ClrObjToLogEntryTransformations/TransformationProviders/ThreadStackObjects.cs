@@ -45,7 +45,7 @@
 
     public virtual LogEntry BuildCandidate([NotNull] ClrRuntime clrRuntime, ClrThread thread, out LogEntry[] nested)
     {
-
+      
       if (thread == null)
       {
         nested = null;

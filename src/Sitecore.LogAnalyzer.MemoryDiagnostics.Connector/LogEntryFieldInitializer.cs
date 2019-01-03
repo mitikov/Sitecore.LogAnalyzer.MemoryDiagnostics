@@ -4,8 +4,8 @@
 
   /// <summary>
   /// Allows to apply custom logic on <see cref="ClrObjLogEntry"/> via manipulations with <see cref="ClrObjLogEntry.Model"/> entry. 
-  /// <para><example>Set other text content</example></para>
-  /// <para>Stock implementation does nothing by default.</para>
+  /// <para>Example: Set other text content.</para>
+  /// <para>Remarks: Stock implementation does nothing by default.</para>
   /// </summary>
   public class LogEntryFieldInitializer : IInitLogEntryFields
   {

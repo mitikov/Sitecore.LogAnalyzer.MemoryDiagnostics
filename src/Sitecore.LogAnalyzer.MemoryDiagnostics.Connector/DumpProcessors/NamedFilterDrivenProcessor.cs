@@ -19,11 +19,6 @@
   /// <seealso cref="MD.JulyPowered.DumpProcessors.DiDumpProcessor" />
   public class NamedFilterDrivenProcessor : DiDumpProcessor
   {
-    #region fields    
-
-    #endregion
-
-    #region constructor
     /// <summary>
     /// Initializes a new instance of the <see cref="NamedFilterDrivenProcessor"/> class.
     /// </summary>
@@ -35,13 +30,7 @@
       ClrObjectEnumerator = objectEnumerationConnection;
     }
 
-    #endregion
-
-    #region Properties    
-
     protected override IEnumeratiorConnection ClrObjectEnumerator { get; }
-
-    #endregion
 
     protected override void OnPreBuildParsingResult(ClrRuntime clrRuntime, ProcessContext context)
     {
@@ -65,9 +54,6 @@
     /// </summary>
     /// <param name="connection">The connection.</param>
     /// <returns>name extracted from connection details.</returns>
-    protected virtual string GetfilterName(IConnectionSettings connection)
-    {
-      return ((INameProvider)connection).Name;
-    }
+    protected virtual string GetfilterName(IConnectionSettings connection) => ((INameProvider)connection).Name;
   }
 }

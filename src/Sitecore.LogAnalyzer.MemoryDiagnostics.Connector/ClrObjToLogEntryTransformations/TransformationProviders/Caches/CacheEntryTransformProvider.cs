@@ -1,11 +1,9 @@
 ﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTransformations.TransformationProviders
 {
-  using System;
   using System.Collections;
   using System.Collections.Generic;
   using Microsoft.Diagnostics.Runtime;
   using Sitecore.LogAnalyzer.Models;
-  using Sitecore.MemoryDiagnostics.ModelFactory;
   using Sitecore.MemoryDiagnostics.ModelFactory.Abstracts;
   using Sitecore.MemoryDiagnostics.ModelFilters;
   using Sitecore.MemoryDiagnostics.Models.BaseMappingModel;
@@ -30,7 +28,7 @@
 
       if (sitecoreCache.currentSize == 0)
       {
-        LogAnalyzer.Context.Message("{0} cache is empty.", sitecoreCache.name);
+        Context.Message("{0} cache is empty.", sitecoreCache.name);
         return null;
       }
 

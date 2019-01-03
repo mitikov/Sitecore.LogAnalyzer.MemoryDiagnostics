@@ -5,10 +5,9 @@
   using System.Windows.Forms;
   using Sitecore.MemoryDiagnostics.ConnectionDetails;
   using Sitecore.MemoryDiagnostics.SourceFactories;
-  using Sitecore.Diagnostics;
   using Sitecore.LogAnalyzer.Settings;
-  using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector;
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ConnectionDetails;
+  using Sitecore.LogAnalyzer;
 
   public partial class PickDumpDetails : Form
   {
@@ -83,7 +82,7 @@
     [NotNull]
     protected virtual string FindMsCordInSameFolder([NotNull] DirectoryInfo directory)
     {
-      Assert.ArgumentNotNull(directory, "directory");
+      Assert.ArgumentNotNull(directory, nameof(directory));
       var files = directory.GetFiles("mscordacwks*.dll");
       if (files.Length == 0)
       {

@@ -4,7 +4,6 @@
   using Sitecore.MemoryDiagnostics;
   using Sitecore.MemoryDiagnostics.ModelMetadataInterfaces;
   using Sitecore;
-  using Sitecore.Diagnostics;
 
   /// <summary>
   /// Represents per-type statistics of object instances in heap.
@@ -34,7 +33,7 @@
     #region Constructors
     public HeapStatEntry([NotNull] string typeName)
     {
-      Assert.ArgumentNotNullOrEmpty(typeName, "typeName");
+      Assert.ArgumentNotNullOrEmpty(typeName, nameof(typeName));
       Count = 0;
       Size = 0;
       Name = typeName;
@@ -66,12 +65,6 @@
     /// </returns>
     public override int GetHashCode() => hash;
 
-    /// <summary>
-    /// Returns a <see cref="System.String" /> that represents this instance.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="System.String" /> that represents this instance.
-    /// </returns>
     public override string ToString() => $"{Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(Size),4:n0} {Count,4:0} {Name}";   
     #endregion
   }
