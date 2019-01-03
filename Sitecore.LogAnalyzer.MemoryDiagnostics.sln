@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.LogAnalyzer.Memory
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.LogAnalyzer.MemoryDiagnostics.ConfigurationFetcher", "src\Sitecore.LogAnalyzer.MemoryDiagnostics.ConfigurationFetcher\Sitecore.LogAnalyzer.MemoryDiagnostics.ConfigurationFetcher.csproj", "{5BD8FC57-B138-4DB8-B344-6861B9766FC3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.LogAnalyzer.MemoryDiagnostics.AssemblySaver", "src\Sitecore.LogAnalyzer.MemoryDiagnostics.AssemblySaver\Sitecore.LogAnalyzer.MemoryDiagnostics.AssemblySaver.csproj", "{EFCDD4C6-E530-4008-B384-C04A2E461828}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{5BD8FC57-B138-4DB8-B344-6861B9766FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5BD8FC57-B138-4DB8-B344-6861B9766FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5BD8FC57-B138-4DB8-B344-6861B9766FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFCDD4C6-E530-4008-B384-C04A2E461828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFCDD4C6-E530-4008-B384-C04A2E461828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFCDD4C6-E530-4008-B384-C04A2E461828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFCDD4C6-E530-4008-B384-C04A2E461828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
