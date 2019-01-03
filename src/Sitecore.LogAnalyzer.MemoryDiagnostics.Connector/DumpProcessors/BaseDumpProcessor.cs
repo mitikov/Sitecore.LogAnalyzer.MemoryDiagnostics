@@ -27,16 +27,16 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.DumpProcessors
     /// <param name="processingContext">The processing context.</param>
     void ILogProcessor.StartAnalyzing([NotNull] ProcessContext processingContext)
     {
-      this.Initialize();
+      Initialize();
       Sitecore.Diagnostics.Assert.ArgumentNotNull(processingContext, "processingContext");
 
       if (processingContext.Async)
       {
-        Task.Factory.StartNew(() => this.ProcessWrapped(processingContext));
+        Task.Factory.StartNew(() => ProcessWrapped(processingContext));
       }
       else
       {
-        this.ProcessWrapped(processingContext);
+        ProcessWrapped(processingContext);
       }
     }
     #endregion
@@ -82,17 +82,17 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.DumpProcessors
 
       var connection = context.Settings.ConnectionSettings as MemoryDumpConnectionDetails;      
 
-      var clrRuntime = this.BuildRuntime(connection);
+      var clrRuntime = BuildRuntime(connection);
 
-      this.OnPreBuildParsingResult(clrRuntime, context);
+      OnPreBuildParsingResult(clrRuntime, context);
 
-      var parsingResult = this.BuildParsingResult(clrRuntime, context.Settings);
+      var parsingResult = BuildParsingResult(clrRuntime, context.Settings);
 
-      this.ReorganizeParsingResult(parsingResult);
+      ReorganizeParsingResult(parsingResult);
 
-      var captions = this.BuildCaptions(parsingResult);
+      var captions = BuildCaptions(parsingResult);
 
-      var result = this.BuildGeneralContext(parsingResult, captions);
+      var result = BuildGeneralContext(parsingResult, captions);
 
       return result;
     }
@@ -168,7 +168,7 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.DumpProcessors
         Context.Message("Processing has started. Please wait");
         processingContext.SetProcessingStarted();
 
-        var resultingGeneralContext = this.DoProcessing(processingContext);
+        var resultingGeneralContext = DoProcessing(processingContext);
         Context.Message("Processing has finished.");
         processingContext.SetResult(resultingGeneralContext);
       }

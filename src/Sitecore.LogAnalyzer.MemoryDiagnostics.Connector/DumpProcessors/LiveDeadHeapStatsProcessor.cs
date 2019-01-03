@@ -31,15 +31,15 @@
     public LiveDeadHeapStatsProcessor(ILogAnalyzerFacade logAnalyzerFacade, IGetAliveObjects liveObjectsEnumerator, ISetStatsLevel statsLevelSetter) 
       : base(logAnalyzerFacade, new MdBasedEnumerationConnection(new AllHeapObjects()), new EmptyClrObjectTransformator())
     {
-      this.LiveObjectsEnumerator = liveObjectsEnumerator;
-      this.StatsLevelSetter = statsLevelSetter;
+      LiveObjectsEnumerator = liveObjectsEnumerator;
+      StatsLevelSetter = statsLevelSetter;
     }
     #endregion
     protected override ParsingResult BuildParsingResult(ClrRuntime clrRuntime, LogProcessorSettings processContext)
     {
       Context.Message("Locating of alive objects started (can take a while).");
 
-      var alive = this.LiveObjectsEnumerator.GetAliveObjects(clrRuntime);
+      var alive = LiveObjectsEnumerator.GetAliveObjects(clrRuntime);
 
       Context.Message("Locating of alive objects ended.");
       
@@ -48,12 +48,12 @@
       var list = new List<LogEntry>(1000 * 10);
       var index = 0;
 
-      list.AddRange(from statEntry in this.GetObjectTypeStats(clrRuntime, alive)
+      list.AddRange(from statEntry in GetObjectTypeStats(clrRuntime, alive)
                     let result = new LogEntry
                     {
                       LogDateTime = statEntry.Datetime,
                       Text = statEntry.ToString(),
-                      Level = this.StatsLevelSetter.SetLevel(statEntry),
+                      Level = StatsLevelSetter.SetLevel(statEntry),
                       LinesCount = 1,
                       Caption = statEntry.Caption,
                       Index = ++index
@@ -80,7 +80,7 @@
 
       var processed = 0;
 
-      foreach (var clrObj in this.ClrObjectEnumerator.ExtractFromRuntime(runtime))
+      foreach (var clrObj in ClrObjectEnumerator.ExtractFromRuntime(runtime))
       {
         var obj = clrObj.Address;
         var type = clrObj.Type;

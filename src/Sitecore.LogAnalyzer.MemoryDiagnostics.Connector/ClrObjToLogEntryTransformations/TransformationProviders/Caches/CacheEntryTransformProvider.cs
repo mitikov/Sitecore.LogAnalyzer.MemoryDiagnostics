@@ -45,7 +45,7 @@
           continue;
         }
 
-        var entry = this.ModelToClrObjLogEntry(parentEntry, casted);
+        var entry = ModelToClrObjLogEntry(parentEntry, casted);
         if (entry != null)
         {
           result.Add(entry);

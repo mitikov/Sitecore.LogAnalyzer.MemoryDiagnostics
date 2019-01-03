@@ -33,10 +33,10 @@
     /// </param>
     public ClrObjectTranformProvider(IModelMapperFactory modelMapperFactory, IInitLogEntryFields logEntryFieldsInitializer, IModelMappingFilter filter)
     {
-      this.ModelMapperFactory = modelMapperFactory;
-      this.Filter = filter;
-      this.LogEntryFieldsInitializer = logEntryFieldsInitializer;
-      this.Storage = new TextStorage();
+      ModelMapperFactory = modelMapperFactory;
+      Filter = filter;
+      LogEntryFieldsInitializer = logEntryFieldsInitializer;
+      Storage = new TextStorage();
     }
 
     #region fields

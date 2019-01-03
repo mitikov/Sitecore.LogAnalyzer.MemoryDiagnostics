@@ -13,9 +13,9 @@
     /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
     protected override void Dispose(bool disposing)
     {
-      if (disposing && (this.components != null))
+      if (disposing && (components != null))
       {
-        this.components.Dispose();
+        components.Dispose();
       }
       base.Dispose(disposing);
     }
@@ -28,50 +28,50 @@
     /// </summary>
     private void InitializeComponent()
     {
-      this.additionalTxtInput = new System.Windows.Forms.TextBox();
-      this.additionalInputComments = new System.Windows.Forms.Label();
-      this.SuspendLayout();
+      additionalTxtInput = new System.Windows.Forms.TextBox();
+      additionalInputComments = new System.Windows.Forms.Label();
+      SuspendLayout();
       // 
       // okBtn
       // 
-      this.okBtn.Click += new System.EventHandler(this.okBtn_Click);
+      okBtn.Click += new System.EventHandler(okBtn_Click);
       // 
       // additionalTxtInput
       // 
-      this.additionalTxtInput.Font = new System.Drawing.Font("Times New Roman", 12F);
-      this.additionalTxtInput.Location = new System.Drawing.Point(54, 270);
-      this.additionalTxtInput.Name = "additionalTxtInput";
-      this.additionalTxtInput.Size = new System.Drawing.Size(100, 26);
-      this.additionalTxtInput.TabIndex = 8;
-      this.additionalTxtInput.Text = "web";
+      additionalTxtInput.Font = new System.Drawing.Font("Times New Roman", 12F);
+      additionalTxtInput.Location = new System.Drawing.Point(54, 270);
+      additionalTxtInput.Name = "additionalTxtInput";
+      additionalTxtInput.Size = new System.Drawing.Size(100, 26);
+      additionalTxtInput.TabIndex = 8;
+      additionalTxtInput.Text = "web";
       // 
       // additionalInputComments
       // 
-      this.additionalInputComments.AutoSize = true;
-      this.additionalInputComments.Font = new System.Drawing.Font("Times New Roman", 12F);
-      this.additionalInputComments.Location = new System.Drawing.Point(16, 239);
-      this.additionalInputComments.Name = "additionalInputComments";
-      this.additionalInputComments.Size = new System.Drawing.Size(233, 19);
-      this.additionalInputComments.TabIndex = 9;
-      this.additionalInputComments.Text = "Database name to load prefetch from";
+      additionalInputComments.AutoSize = true;
+      additionalInputComments.Font = new System.Drawing.Font("Times New Roman", 12F);
+      additionalInputComments.Location = new System.Drawing.Point(16, 239);
+      additionalInputComments.Name = "additionalInputComments";
+      additionalInputComments.Size = new System.Drawing.Size(233, 19);
+      additionalInputComments.TabIndex = 9;
+      additionalInputComments.Text = "Database name to load prefetch from";
       // 
       // DumpDetailsWithText
       // 
-      this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-      this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(697, 325);
-      this.Controls.Add(this.additionalInputComments);
-      this.Controls.Add(this.additionalTxtInput);
-      this.Name = "DumpDetailsWithText";
-      this.Text = "Name";
-      this.Controls.SetChildIndex(this.okBtn, 0);
-      this.Controls.SetChildIndex(this.CancelBtn, 0);
-      this.Controls.SetChildIndex(this.dumpPathTxt, 0);
-      this.Controls.SetChildIndex(this.mscordPathTxt, 0);
-      this.Controls.SetChildIndex(this.additionalTxtInput, 0);
-      this.Controls.SetChildIndex(this.additionalInputComments, 0);
-      this.ResumeLayout(false);
-      this.PerformLayout();
+      AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+      AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+      ClientSize = new System.Drawing.Size(697, 325);
+      Controls.Add(additionalInputComments);
+      Controls.Add(additionalTxtInput);
+      Name = "DumpDetailsWithText";
+      Text = "Name";
+      Controls.SetChildIndex(okBtn, 0);
+      Controls.SetChildIndex(CancelBtn, 0);
+      Controls.SetChildIndex(dumpPathTxt, 0);
+      Controls.SetChildIndex(mscordPathTxt, 0);
+      Controls.SetChildIndex(additionalTxtInput, 0);
+      Controls.SetChildIndex(additionalInputComments, 0);
+      ResumeLayout(false);
+      PerformLayout();
 
     }
 

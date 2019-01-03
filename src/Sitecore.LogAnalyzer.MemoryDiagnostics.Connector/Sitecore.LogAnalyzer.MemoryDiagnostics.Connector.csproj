@@ -155,7 +155,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-      <CustomToolNamespace>Sitecore.SCLA.MemoryDiagnostics</CustomToolNamespace>
+      <CustomToolNamespace>Sitecore.LogAnalyzer.MemoryDiagnostics.Connector</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -18,9 +18,9 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTrans
     /// <param name="entry">The entry.</param>
     public void ApplyCustomLogicOnLogEntry([NotNull]ClrObjLogEntry entry)
     {
-      Assert.ArgumentNotNull(entry, "ClrObjLogEntry");
-      var model = entry.Model as ScCache;
-      if (model == null)
+      Assert.ArgumentNotNull(entry, nameof(entry));
+
+      if (!(entry.Model is ScCache model))
       {
         return;
       }

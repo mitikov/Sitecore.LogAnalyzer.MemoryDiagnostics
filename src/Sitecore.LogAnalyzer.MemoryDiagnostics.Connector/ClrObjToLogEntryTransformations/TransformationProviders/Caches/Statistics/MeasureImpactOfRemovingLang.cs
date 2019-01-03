@@ -24,7 +24,7 @@
 
     public ImpactOfRemovingLangfromPrefetchCacheTransformProvider(string stringPart, IModelMapperFactory modelMapperFactory, IModelMappingFilter filter, IInitLogEntryFields logEntryFieldsInitializer) : base(modelMapperFactory, filter, logEntryFieldsInitializer)
     {
-      this.KeyInListName = stringPart;
+      KeyInListName = stringPart;
     }
 
     /// <summary>
@@ -38,7 +38,7 @@
     public override LogEntry[] GetNestedObjects(ClrRuntime clrRuntime, ClrObject clrObject, IClrObjMappingModel mapping,
       ClrObjLogEntry parentEntry)
     {
-      this.AccumulatedSize = this.TotalSize = 0;
+      AccumulatedSize = TotalSize = 0;
       var sitecoreCacheMapping = mapping as ScCache;
 
       if (sitecoreCacheMapping == null)
@@ -49,13 +49,13 @@
       // Execute base logic to ensure ModelToClrObjLogEntry gets called.
       base.GetNestedObjects(clrRuntime, clrObject, mapping, parentEntry);
 
-      var ratio = this.TotalSize == 0 ? 0 : ((double)this.AccumulatedSize / this.TotalSize);
+      var ratio = TotalSize == 0 ? 0 : ((double)AccumulatedSize / TotalSize);
 
-      var resultingEntry = new ClrObjLogEntry(null, this.Storage, parentEntry)
+      var resultingEntry = new ClrObjLogEntry(null, Storage, parentEntry)
       {
-        Caption = $"Removing {this.KeyInListName} key {ratio:P} impact",
+        Caption = $"Removing {KeyInListName} key {ratio:P} impact",
         Text =
-          $"{this.KeyInListName} key from {sitecoreCacheMapping.name} cache would save {ratio:P}",
+          $"{KeyInListName} key from {sitecoreCacheMapping.name} cache would save {ratio:P}",
         Level = parentEntry.Level,
         LogDateTime = parentEntry.LogDateTime + TimeSpan.FromSeconds(1)
       };

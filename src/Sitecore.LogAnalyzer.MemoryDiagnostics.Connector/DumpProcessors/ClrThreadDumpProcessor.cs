@@ -28,7 +28,7 @@
     {
       Assert.ArgumentNotNull(threadFilter, nameof(threadFilter));
 
-      this.ThreadFilter = threadFilter;
+      ThreadFilter = threadFilter;
     }
     #endregion
     #region Properties
@@ -58,7 +58,7 @@
           }
           else
           {
-            candidate = this.BuildCandidate(clrRuntime, threadClrObj, out nested);
+            candidate = BuildCandidate(clrRuntime, threadClrObj, out nested);
           }
         }
 
@@ -74,7 +74,7 @@
           continue;
         }
 
-        var filtered = this.FilterChildren(nested).ToArray();
+        var filtered = FilterChildren(nested).ToArray();
 
         Array.ForEach(filtered, t => t.Index = ++i);
         correctModels.AddRange(filtered);

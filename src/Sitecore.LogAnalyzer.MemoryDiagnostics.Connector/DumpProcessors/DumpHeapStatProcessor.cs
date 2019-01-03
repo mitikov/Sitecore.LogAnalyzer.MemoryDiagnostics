@@ -41,7 +41,7 @@
       var filter = processContext.ReaderSettings;
       var list = new List<LogEntry>(1000 * 10);
       int index = 0;
-      list.AddRange(from statEntry in heapStatProcessor.GetObjectTypeStats(clrRuntime, this.ClrObjectEnumerator)
+      list.AddRange(from statEntry in heapStatProcessor.GetObjectTypeStats(clrRuntime, ClrObjectEnumerator)
                     let result = new LogEntry
                     {
                       LogDateTime = statEntry.Datetime,

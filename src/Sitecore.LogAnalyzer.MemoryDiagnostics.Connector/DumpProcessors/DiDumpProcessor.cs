@@ -33,11 +33,11 @@
       IEnumeratiorConnection objectEnumerationConnection, 
       IClrObjectTransformator clrObjToLogEntryTransformProvider)
     {
-      this.LogAnalyzerFacade = logAnalyzerFacade;
+      LogAnalyzerFacade = logAnalyzerFacade;
 
-      this.ClrObjectEnumerator = objectEnumerationConnection;
+      ClrObjectEnumerator = objectEnumerationConnection;
 
-      this.ClrObjToLogEntryTransformProvider = clrObjToLogEntryTransformProvider;
+      ClrObjToLogEntryTransformProvider = clrObjToLogEntryTransformProvider;
     }
 
     /// <summary>
@@ -48,11 +48,11 @@
     /// </value>
     protected virtual ILogAnalyzerFacade LogAnalyzerFacade { get; }
 
-    protected override sealed ICaptionManager CaptionManager => this.LogAnalyzerFacade.CaptionManager;
+    protected override sealed ICaptionManager CaptionManager => LogAnalyzerFacade.CaptionManager;
 
     protected override IEnumeratiorConnection ClrObjectEnumerator { get; }
 
-    protected override sealed IContextFactory ContextFactory => this.LogAnalyzerFacade.ContextFactory;
+    protected override sealed IContextFactory ContextFactory => LogAnalyzerFacade.ContextFactory;
 
     protected override IClrObjectTransformator ClrObjToLogEntryTransformProvider { get; }
   }

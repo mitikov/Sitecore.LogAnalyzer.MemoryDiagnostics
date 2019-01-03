@@ -30,8 +30,8 @@
     /// <param name="entry">The entry.</param>
     public LiveDeadHeapStatEntry(HeapStatEntry entry) : base(entry.Name)
     {
-      this.Count = entry.Count;
-      this.Size = entry.Size;
+      Count = entry.Count;
+      Size = entry.Size;
     }
 
     /// <summary>
@@ -51,7 +51,7 @@
     /// <value>
     /// The alive percent.
     /// </value>
-    public virtual float AlivePercent => this.Count == 0 ? 0 : (float)this.LiveCount / this.Count;
+    public virtual float AlivePercent => Count == 0 ? 0 : (float)LiveCount / Count;
 
     /// <summary>
     /// Gets the alive percent text.
@@ -59,13 +59,13 @@
     /// <value>
     /// The alive percent text.
     /// </value>
-    public virtual string AlivePercentText => this.AlivePercent.ToString("P");
+    public virtual string AlivePercentText => AlivePercent.ToString("P");
 
     /// <summary>
     /// A brief instance description
     /// </summary>
     public override string Caption =>
-      $"{Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(this.DeadSize)} [{this.DeadCount}] dead {Sitecore.MemoryDiagnostics.StringUtil.StripNamespaceFromTypeFullName(this.Name)}";
+      $"{Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(DeadSize)} [{DeadCount}] dead {Sitecore.MemoryDiagnostics.StringUtil.StripNamespaceFromTypeFullName(Name)}";
 
     /// <summary>
     /// Gets the <see cref="DateTime" /> ( for sorting purposes ).
@@ -73,7 +73,7 @@
     /// <value>
     /// The DateTime.
     /// </value>
-    public override DateTime Datetime => DateTime.Today.AddMilliseconds(-((long)this.DeadSize));
+    public override DateTime Datetime => DateTime.Today.AddMilliseconds(-((long)DeadSize));
 
     /// <summary>
     /// Gets the number of dead objects.
@@ -81,7 +81,7 @@
     /// <value>
     /// The dead count.
     /// </value>
-    public int DeadCount => this.Count - this.LiveCount;
+    public int DeadCount => Count - LiveCount;
 
     /// <summary>
     /// Gets the size of dead objects.
@@ -89,7 +89,7 @@
     /// <value>
     /// The size of the dead.
     /// </value>
-    public ulong DeadSize => this.Size - this.LiveSize;
+    public ulong DeadSize => Size - LiveSize;
     #endregion
 
     /// <summary>
@@ -101,10 +101,10 @@
     public override string ToString()
     {
       var sb = new StringBuilder();
-      sb.AppendLine($"{this.Name} alive: {this.AlivePercentText}")
-        .AppendLine($"Total objects: {this.Count} Size: {Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(this.Size)}")
-        .AppendLine($"Live objects: {this.LiveCount} Size: {Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(this.LiveSize)}")
-        .AppendLine($"Dead objects: {this.DeadCount} Size: {Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(this.DeadSize)}");
+      sb.AppendLine($"{Name} alive: {AlivePercentText}")
+        .AppendLine($"Total objects: {Count} Size: {Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(Size)}")
+        .AppendLine($"Live objects: {LiveCount} Size: {Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(LiveSize)}")
+        .AppendLine($"Dead objects: {DeadCount} Size: {Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(DeadSize)}");
 
       return sb.ToString();
     }

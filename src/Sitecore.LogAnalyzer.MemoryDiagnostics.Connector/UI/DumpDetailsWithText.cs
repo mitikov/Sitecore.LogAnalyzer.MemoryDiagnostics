@@ -14,7 +14,7 @@
 
     public DumpDetailsWithText()
     {
-      this.InitializeComponent();
+      InitializeComponent();
     }
 
     /// <summary>
@@ -27,21 +27,21 @@
 
     protected override void okBtn_Click(object sender, EventArgs e)
     {
-      Assert.IsNotNullOrEmpty(this.TextMask, "TextMask is not set.");
-      this.DialogResult = DialogResult.OK;
+      Assert.IsNotNullOrEmpty(TextMask, "TextMask is not set.");
+      DialogResult = DialogResult.OK;
 
-      var inputText = this.additionalTxtInput.Text;
+      var inputText = additionalTxtInput.Text;
 
-      var textForConnection = this.FormatTextByMask(inputText);
+      var textForConnection = FormatTextByMask(inputText);
 
-      this.FileConnection = new MemoryDumpFileBasedConnectionWithName(textForConnection, this.dumpPathTxt.Text, this.mscordPathTxt.Text);
+      FileConnection = new MemoryDumpFileBasedConnectionWithName(textForConnection, dumpPathTxt.Text, mscordPathTxt.Text);
 
-      PickDumpDetails.prevConnection = this.FileConnection;
+      PickDumpDetails.prevConnection = FileConnection;
 
-      this.Close();
+      Close();
     }
 
-    protected virtual string FormatTextByMask(string inputText) => string.Format(this.TextMask, inputText);
+    protected virtual string FormatTextByMask(string inputText) => string.Format(TextMask, inputText);
 
   }                                                                          
 }

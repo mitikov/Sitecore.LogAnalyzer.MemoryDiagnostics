@@ -32,7 +32,7 @@
         return result;
       }
 
-      this.ProcessClrObjectEntries(items, result, selector);
+      ProcessClrObjectEntries(items, result, selector);
 
       return result;
     }
@@ -55,7 +55,7 @@
             Name = rootElem.Caption,
           };
           List<LogEntry> descendants = new List<LogEntry>() { rootElem };
-          lg.SubGroups = this.GetSubGroups(groups, rootElem, descendants, selecter);
+          lg.SubGroups = GetSubGroups(groups, rootElem, descendants, selecter);
           lg.Values = descendants.ToArray();
           result.Add(lg.DisplayName, lg);
         }
@@ -88,7 +88,7 @@
 
         List<LogEntry> innerKids = new List<LogEntry> { childEntry };
 
-        lg.SubGroups = this.GetSubGroups(groups, childEntry, innerKids, selecter, intent + DefaultIntent);
+        lg.SubGroups = GetSubGroups(groups, childEntry, innerKids, selecter, intent + DefaultIntent);
 
         kids.AddRange(innerKids);
         var descendants = new LogEntry[innerKids.Count + 1];

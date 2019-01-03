@@ -90,7 +90,7 @@
     [Inject]
     public DumpProcessorBase()
     {
-      this.ClrObjectEnumerator =
+      ClrObjectEnumerator =
         Context.GetOrDefault<IEnumeratiorConnection>(
           new MdBasedEnumerationConnection(
           new DefaultObjectEnumerationFacade(
@@ -98,11 +98,11 @@
             Context.GetOrDefault<IFilteredObjectsProvider>(NullFilterClrObjectProvider.Instance))));
 
 
-      this.ContextFactory = Context.GetOrDefault(EmptyContextFactory.Instance);
+      ContextFactory = Context.GetOrDefault(EmptyContextFactory.Instance);
 
-      this.CaptionManager = Context.GetOrDefault<ICaptionManager>(new CaptionManager());
+      CaptionManager = Context.GetOrDefault<ICaptionManager>(new CaptionManager());
 
-      this.ClrObjToLogEntryTransformProvider = Context.GetOrDefault<IClrObjectTransformator>(
+      ClrObjToLogEntryTransformProvider = Context.GetOrDefault<IClrObjectTransformator>(
         new ClrObjectTranformProvider(
       Context.GetOrDefault<IModelMapperFactory>(new LazyLoadModelMapperFactory()),
       Context.GetOrDefault<IInitLogEntryFields>(LogEntryFieldInitializer.Singleton),

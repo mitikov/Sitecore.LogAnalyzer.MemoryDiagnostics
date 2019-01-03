@@ -37,14 +37,14 @@
     /// <value>
     /// The address.
     /// </value>
-    public ulong Address => this.Model?.Obj.Address ?? ulong.MinValue;
+    public ulong Address => Model?.Obj.Address ?? ulong.MinValue;
 
     /// <summary>
     /// Indicates if 
     /// </summary>
-    public bool HasMappingModel => this.Model != null;
+    public bool HasMappingModel => Model != null;
 
-    public ClrObject? ClrObject => this.Model?.Obj;   
+    public ClrObject? ClrObject => Model?.Obj;   
 
     #endregion
 
@@ -58,11 +58,11 @@
     public ClrObjLogEntry(IClrObjMappingModel model = null, TextStorage storage = null, ClrObjLogEntry parent = null)
       : base(storage)
     {
-      this.Model = model;
-      this.Parent = parent;
-      if (this.Address != default(ulong))
+      Model = model;
+      Parent = parent;
+      if (Address != default(ulong))
       {
-        this.Level = LogLevel.INFO;
+        Level = LogLevel.INFO;
       }
     }
     #endregion
@@ -96,41 +96,41 @@
     {
       try
       {
-        if (this.Model == null)
+        if (Model == null)
         {
-          this.Caption = "[NoModel]";
-          this.Text = "[Emtpy Model]";
-          this.LinesCount = 1;
-          this.EventSource = "[No Source]";
-          this.Level = LogLevel.FATAL;
-          this.LogDateTime = DateTime.UtcNow;
+          Caption = "[NoModel]";
+          Text = "[Emtpy Model]";
+          LinesCount = 1;
+          EventSource = "[No Source]";
+          Level = LogLevel.FATAL;
+          LogDateTime = DateTime.UtcNow;
           return;
         }
 
-        if (this.Model is IDateTimeHolder)
+        if (Model is IDateTimeHolder)
         {
-          this.LogDateTime = (this.Model as IDateTimeHolder).Datetime;
+          LogDateTime = (Model as IDateTimeHolder).Datetime;
         }
         else
         {
-          this.LogDateTime = DateTime.UtcNow;
+          LogDateTime = DateTime.UtcNow;
         }
 
         using (new MemoryFailPoint(sizeInMegabytes: 500))
         {
-          using (new MemoryUsageWatcher("{0} obj {1} model".FormatWith(this.Model.Obj.HexAddress, Model.ModelOfTypeName)))
+          using (new MemoryUsageWatcher("{0} obj {1} model".FormatWith(Model.Obj.HexAddress, Model.ModelOfTypeName)))
           {
-            var modelText = this.Model.ToString();
-            this.Text = string.IsNullOrEmpty(modelText) ? "[Model yielded No Text]" : modelText.Trim();
+            var modelText = Model.ToString();
+            Text = string.IsNullOrEmpty(modelText) ? "[Model yielded No Text]" : modelText.Trim();
           }
 
-          if (this.Model is ICaptionHolder)
+          if (Model is ICaptionHolder)
           {
-            this.Caption = (this.Model as ICaptionHolder).Caption;
+            Caption = (Model as ICaptionHolder).Caption;
           }
           else
           {
-            this.Caption = this.Text;
+            Caption = Text;
           }
         }
       }
@@ -141,7 +141,7 @@
           Debugger.Break();
         }
 
-        throw new Exception("{0} not enough memory".FormatWith(this.Model.Obj.HexAddress), ex);
+        throw new Exception("{0} not enough memory".FormatWith(Model.Obj.HexAddress), ex);
       }
       catch (OutOfMemoryException ex)
       {
@@ -150,15 +150,15 @@
           Debugger.Break();
         }
 
-        throw new Exception("{0} not enough memory".FormatWith(this.Model.Obj.HexAddress), ex);
+        throw new Exception("{0} not enough memory".FormatWith(Model.Obj.HexAddress), ex);
       }
 
       //if (Model is NoConverterForType)
-      //this.Level =LogLevel.DEBUG;
+      //Level =LogLevel.DEBUG;
 
-      this.EventSource = this.Model.Obj.Address.ToString("X") + " [" + this.Model.GetType().Name + "]";
+      EventSource = Model.Obj.Address.ToString("X") + " [" + Model.GetType().Name + "]";
 
-      this.LinesCount = StringUtil.LinesCount(this.Text);
+      LinesCount = StringUtil.LinesCount(Text);
     }
 
     #endregion
@@ -167,7 +167,7 @@
 
     public override string ToString()
     {
-      return this.Caption + Environment.NewLine + this.Text;
+      return Caption + Environment.NewLine + Text;
     }
 
     #endregion
@@ -180,12 +180,12 @@
         return false;
       }
 
-      return other.Address == this.Address;
+      return other.Address == Address;
     }
 
     bool IEquatable<ClrObjLogEntry>.Equals(ClrObjLogEntry other)
     {
-      return this.Equals(other);
+      return Equals(other);
     }
 
     public override bool Equals(object obj)
@@ -195,12 +195,12 @@
         return false;
       }
       var casted = obj as ClrObjLogEntry;
-      return casted == null ? base.Equals(obj) : this.Equals(casted);
+      return casted == null ? base.Equals(obj) : Equals(casted);
     }
 
     public override int GetHashCode()
     {
-      return this.Address.GetHashCode();
+      return Address.GetHashCode();
     }
     #endregion
 

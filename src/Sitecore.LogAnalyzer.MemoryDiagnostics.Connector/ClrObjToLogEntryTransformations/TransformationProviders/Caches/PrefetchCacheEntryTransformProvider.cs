@@ -20,7 +20,7 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTrans
     public PrefetchCacheEntryTransformProvider(IModelMapperFactory modelMapperFactory, IModelMappingFilter filter, IInitLogEntryFields logEntryFieldsInitializer) : base(modelMapperFactory, filter, logEntryFieldsInitializer)
     {
       var query = "SELECT ID, Name from Items";
-      using (var cmd = new SqlCommand(query, new SqlConnection(this.connection)))
+      using (var cmd = new SqlCommand(query, new SqlConnection(connection)))
       {
         cmd.Connection.Open();
         var reader = cmd.ExecuteReader();
@@ -49,7 +49,7 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTrans
 
       var dt = target.data as IClrObjMappingModel;
 
-      var entry = new ClrObjLogEntry(dt, this.Storage, parentEntry);
+      var entry = new ClrObjLogEntry(dt, Storage, parentEntry);
 
       entry.InitFldsFromModel();
 

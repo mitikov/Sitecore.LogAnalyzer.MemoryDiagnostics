@@ -20,57 +20,57 @@
 
     public PickDumpDetails()
     {
-      this.InitializeComponent();
+      InitializeComponent();
     }
 
     protected virtual void okBtn_Click(object sender, EventArgs e)
     {
-      this.DialogResult = DialogResult.OK;
+      DialogResult = DialogResult.OK;
 
-      this.FileConnection = new MemoryDumpConnectionDetails(dumpPathTxt.Text, mscordPathTxt.Text);
-      prevConnection = this.FileConnection;
-      this.Close();
+      FileConnection = new MemoryDumpConnectionDetails(dumpPathTxt.Text, mscordPathTxt.Text);
+      prevConnection = FileConnection;
+      Close();
     }
 
 
     protected virtual void EnsureSelectedDataExists(object sender, EventArgs e)
     {
-      this.okBtn.Enabled = this.SelectedDataExists();
+      okBtn.Enabled = SelectedDataExists();
     }
 
     protected virtual bool SelectedDataExists()
     {
-      return File.Exists(this.mscordPathTxt.Text) && File.Exists(this.dumpPathTxt.Text);      
+      return File.Exists(mscordPathTxt.Text) && File.Exists(dumpPathTxt.Text);      
     }
 
 
     private void CancelBtn_Click(object sender, EventArgs e)
     {
-      this.DialogResult = DialogResult.Cancel;
-      this.Close();
+      DialogResult = DialogResult.Cancel;
+      Close();
     }
 
 
     private void showDumpDlg_Click(object sender, EventArgs e)
     {
-      if (this.DumpDlg.ShowDialog() == DialogResult.OK)
+      if (DumpDlg.ShowDialog() == DialogResult.OK)
       {
-        this.dumpPathTxt.Text = this.DumpDlg.FileName;
+        dumpPathTxt.Text = DumpDlg.FileName;
         string pathToMscord;
-        if (MDClrRuntimeFactory.TryGetMscordacPath(this.dumpPathTxt.Text, out pathToMscord))
+        if (MDClrRuntimeFactory.TryGetMscordacPath(dumpPathTxt.Text, out pathToMscord))
         {
-          this.mscordPathTxt.Text = pathToMscord;
+          mscordPathTxt.Text = pathToMscord;
         }
         else
         {
-          if (this.msCordSetManually)
+          if (msCordSetManually)
           {
             return;
           }
 
           try
           {
-            this.mscordPathTxt.Text = this.FindMsCordInSameFolder(new FileInfo(this.DumpDlg.FileName).Directory);
+            mscordPathTxt.Text = FindMsCordInSameFolder(new FileInfo(DumpDlg.FileName).Directory);
           }
           catch (Exception)
           {
@@ -96,10 +96,10 @@
     }
     private void ShowMscord_Click(object sender, EventArgs e)
     {
-      if (this.mscordDlg.ShowDialog() == DialogResult.OK)
+      if (mscordDlg.ShowDialog() == DialogResult.OK)
       {
-        this.mscordPathTxt.Text = this.mscordDlg.FileName;
-        this.msCordSetManually = true;
+        mscordPathTxt.Text = mscordDlg.FileName;
+        msCordSetManually = true;
       }
     }
 
@@ -111,8 +111,8 @@
         return;
       }
 
-      this.dumpPathTxt.Text = connection.PathToDump;
-      this.mscordPathTxt.Text = connection.PathToMsCorDacwks;
+      dumpPathTxt.Text = connection.PathToDump;
+      mscordPathTxt.Text = connection.PathToMsCorDacwks;
     }
   }
 }

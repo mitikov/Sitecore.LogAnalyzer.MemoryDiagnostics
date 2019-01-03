@@ -32,7 +32,7 @@
     /// <param name="clrObjToLogEntryTransformProvider">The object to log entry transform provider.</param>
     public NamedFilterDrivenProcessor(ILogAnalyzerFacade logAnalyzerFacade, IEnumeratiorConnection objectEnumerationConnection, IClrObjectTransformator clrObjToLogEntryTransformProvider) : base(logAnalyzerFacade, objectEnumerationConnection, clrObjToLogEntryTransformProvider)
     {
-      this.ClrObjectEnumerator = objectEnumerationConnection;
+      ClrObjectEnumerator = objectEnumerationConnection;
     }
 
     #endregion
@@ -49,9 +49,9 @@
 
       Assert.OfType<INameProvider>(connection, typeof(INameProvider), nameof(context.Settings.ConnectionSettings));
 
-      var filterName = this.GetfilterName(connection);
+      var filterName = GetfilterName(connection);
 
-      var filterObjProvider = this.ClrObjectEnumerator.FilteredObjectsProvider;
+      var filterObjProvider = ClrObjectEnumerator.FilteredObjectsProvider;
 
       Assert.OfType<INameProvider>(filterObjProvider, typeof(INameProvider), nameof(filterObjProvider));
 

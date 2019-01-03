@@ -18,8 +18,8 @@
     /// <param name="contextFactory">The context factory.</param>
     public BaseSCLAFacade([NotNull]ICaptionManager captionManager, [NotNull]IContextFactory contextFactory)
     {
-      this.CaptionManager = captionManager;
-      this.ContextFactory = contextFactory;
+      CaptionManager = captionManager;
+      ContextFactory = contextFactory;
     }
 
     public virtual ICaptionManager CaptionManager { get; }

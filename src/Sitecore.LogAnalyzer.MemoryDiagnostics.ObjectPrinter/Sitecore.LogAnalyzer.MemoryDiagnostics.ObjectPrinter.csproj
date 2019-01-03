@@ -53,7 +53,7 @@
     <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConnectionDetails\MdConnectionWithTypeToLoop.cs" />
+    <Compile Include="ConnectionDetails\MemoryDumpConnectionWithType.cs" />
     <Compile Include="SingleHeapTypeAnalysisModule.cs" />
     <Compile Include="DumpProcessors\SingleTypeDumpProcessor.cs" />
     <Compile Include="Invoker.cs" />
