@@ -9,6 +9,9 @@
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.DependencyInjection;
   using SitecoreMemoryInspectionKit.Core.ClrHelpers;
 
+  /// <summary>
+  /// Enumerates objets from thread pool, leaving only threads with <see cref="HttpContext"/> in stacks.
+  /// </summary>
   public class DiBindings : ThreadBasedMemoryDumpAnalysisModule
   {
     protected override void RegisterDumpProcessorDependencies()

@@ -9,13 +9,15 @@ using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector;
 
 namespace Sitecore.LogAnalyzer.MemoryDiagnostics.RunningRequests
 {
+  /// <summary>
+  /// Appends additional details from <see cref="HttpContextMappingModel"/> to <see cref="ClrObjLogEntry"/>.
+  /// <para>Adds requested url, duration, cookies (analytics, asp.net).</para>
+  /// </summary>
   public class AddRequestInfoToParentText : IInitLogEntryFields
   {
     public virtual void ApplyCustomLogicOnLogEntry([NotNull] ClrObjLogEntry entry)
     {
-      var mapping = entry.Model as HttpContextMappingModel;
-
-      if (mapping == null)
+      if (!(entry.Model is HttpContextMappingModel mapping))
       {
         return;
       }
@@ -72,8 +74,6 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.RunningRequests
 
         entry.Parent.Text = string.Join(Environment.NewLine, message, entry.Parent.Text);
       }
-
-      return;
     }
   }
 }
