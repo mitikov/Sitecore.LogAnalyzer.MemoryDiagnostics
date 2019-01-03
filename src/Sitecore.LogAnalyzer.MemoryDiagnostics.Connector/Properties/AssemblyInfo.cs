@@ -10,7 +10,7 @@ using Sitecore.MemoryDiagnostics.Attributes;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Sitecore.LogAnalyzer.MemoryDiagnostics.Connector")]
-[assembly: AssemblyCopyright("Copyright ©  2017")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: CarriesMemoryDumpAnalysisLogic]

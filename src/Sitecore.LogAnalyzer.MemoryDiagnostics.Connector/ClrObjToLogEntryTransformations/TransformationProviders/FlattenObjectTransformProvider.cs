@@ -11,14 +11,14 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTrans
 {
   public class FlattenObjectTransformProvider : ClrObjectTranformProvider
   {
-    public FlattenObjectTransformProvider(IModelMapperFactory modelMapperFactory, IInitLogEntryFields logEntryFieldsInitializer, IModelMappingFilter filter) : base(modelMapperFactory, logEntryFieldsInitializer, filter)
+    public FlattenObjectTransformProvider(IModelMapperFactory modelMapperFactory, IInitLogEntryFields logEntryFieldsInitializer, IModelMappingFilter filter) 
+      : base(modelMapperFactory, logEntryFieldsInitializer, filter)
     {
     }
 
-    public override LogEntry[] GetNestedObjects([LogAnalyzer.Attributes.NotNull] ClrRuntime clrRuntime, ClrObject clrObject, IClrObjMappingModel mapping, ClrObjLogEntry parentEntry)
+    public override LogEntry[] GetNestedObjects([Attributes.NotNull] ClrRuntime clrRuntime, ClrObject clrObject, IClrObjMappingModel mapping, ClrObjLogEntry parentEntry)
     {
-      var objectStream = mapping as IEnumerable<IClrObjMappingModel>;
-      if (objectStream ==null)
+      if (!(mapping is IEnumerable<IClrObjMappingModel> objectStream))
       {
         return null;
       }
@@ -29,7 +29,7 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTrans
         if (@obj.Obj.IsNullObj)
           continue;
 
-        var entry = this.ModelToClrObjLogEntry(parentEntry, @obj);
+        var entry = ModelToClrObjLogEntry(parentEntry, @obj);
         children.Add(entry);
       }
 

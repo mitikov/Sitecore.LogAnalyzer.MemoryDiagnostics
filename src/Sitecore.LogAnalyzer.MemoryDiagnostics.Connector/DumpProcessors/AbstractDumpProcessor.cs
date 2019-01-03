@@ -7,7 +7,7 @@
   using Sitecore.MemoryDiagnostics.Attributes;
   using Sitecore.MemoryDiagnostics.SourceFactories;
   using Microsoft.Diagnostics.Runtime;
-  
+
   using Sitecore.LogAnalyzer.Attributes;
   using Sitecore.LogAnalyzer.Managers;
   using Sitecore.LogAnalyzer.Models;
@@ -86,7 +86,6 @@
     protected abstract IClrObjectTransformator ClrObjToLogEntryTransformProvider { get; }
     #endregion
 
-
     /// <summary>
     ///   Builds the <see cref="LogEntry" /> from <paramref name="clrObject" /> with supporting <see cref="LogEntry" /> array
     ///   in case needed.
@@ -100,9 +99,7 @@
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [TargetedPatchingOptOut("Performace critical")]
     protected LogEntry BuildCandidate([NotNull] ClrRuntime clrRuntime, [ClrObjAndTypeNotEmpty] ClrObject clrObject, [CanBeNull] out LogEntry[] nested)
-    {
-      return this.ClrObjToLogEntryTransformProvider.BuildCandidate(clrRuntime, clrObject, out nested);
-    }
+      => ClrObjToLogEntryTransformProvider.BuildCandidate(clrRuntime, clrObject, out nested);
 
 
     /// <summary>
@@ -115,23 +112,23 @@
     /// </returns>
     protected override LogGroupsCollection BuildCaptions([NotNull] ParsingResult parsingResult)
     {
-      Sitecore.Diagnostics.Assert.ArgumentNotNull(parsingResult, "parsingResult");
+      Assert.ArgumentNotNull(parsingResult, nameof(parsingResult));
       var collection = new LogGroupsCollection
       {
         {
-          LogLevel.DEBUG, this.CaptionManager.GetGroups(parsingResult.Debugs, LogLevel.DEBUG, x => x.Caption)
+          LogLevel.DEBUG, CaptionManager.GetGroups(parsingResult.Debugs, LogLevel.DEBUG, x => x.Caption)
         },
         {
-          LogLevel.FATAL, this.CaptionManager.GetGroups(parsingResult.Fatals, LogLevel.FATAL, x => x.Caption)
+          LogLevel.FATAL, CaptionManager.GetGroups(parsingResult.Fatals, LogLevel.FATAL, x => x.Caption)
         },
         {
-          LogLevel.WARN, this.CaptionManager.GetGroups(parsingResult.Warns, LogLevel.WARN, x => x.Caption)
+          LogLevel.WARN, CaptionManager.GetGroups(parsingResult.Warns, LogLevel.WARN, x => x.Caption)
         },
         {
-          LogLevel.ERROR, this.CaptionManager.GetGroups(parsingResult.Errors, LogLevel.ERROR, x => x.Caption)
+          LogLevel.ERROR, CaptionManager.GetGroups(parsingResult.Errors, LogLevel.ERROR, x => x.Caption)
         },
         {
-          LogLevel.INFO, this.CaptionManager.GetGroups(parsingResult.Infos, LogLevel.INFO, x => x.Caption)
+          LogLevel.INFO, CaptionManager.GetGroups(parsingResult.Infos, LogLevel.INFO, x => x.Caption)
         }
       };
       return collection;
@@ -145,9 +142,7 @@
     /// <param name="captions">The captions.</param>
     /// <returns></returns>
     protected override GeneralContext BuildGeneralContext(ParsingResult parsingResult, LogGroupsCollection captions)
-    {
-      return this.ContextFactory.GetContext(parsingResult, captions);
-    }
+      => ContextFactory.GetContext(parsingResult, captions);
 
     /// <summary>
     ///   Builds the parsing result wrapped in try-catch, so must raise exceptions.
@@ -165,11 +160,11 @@
 
       var correctModels = new List<LogEntry>();
 
-      foreach (var clrObject in this.ClrObjectEnumerator.ExtractFromRuntime(clrRuntime))
+      foreach (var clrObject in ClrObjectEnumerator.ExtractFromRuntime(clrRuntime))
       {
         // Context.Message("Processing " + clrObject.Address.ToString("X") + " of " + clrObject.Type);
         LogEntry[] nested;
-        var candidate = this.BuildCandidate(clrRuntime, clrObject, out nested);
+        var candidate = BuildCandidate(clrRuntime, clrObject, out nested);
 
         if ((candidate == null) || ((filter != null) && !filter.Matches(candidate)))
         {
@@ -222,11 +217,9 @@
     [NotNull]
     protected override ClrRuntime BuildRuntime([NotNull] MemoryDumpConnectionDetails connection)
     {
-      var factory = this.ClrObjectEnumerator.RuntimeFactory;
+      var factory = ClrObjectEnumerator.RuntimeFactory ?? throw new InvalidOperationException($"No {typeof(IClrRuntimeFactory).Name} is set.");
 
-      Sitecore.Diagnostics.Assert.IsNotNull(factory, "{0} is not set.", typeof(IClrRuntimeFactory).Name);
-
-      return Sitecore.Diagnostics.Assert.ResultNotNull(factory.BuildClrRuntime(connection), $"{factory.GetType().Name} returned null object from {connection}");
+      return factory.BuildClrRuntime(connection) ?? throw new InvalidOperationException($"{factory.GetType().Name} returned null object from {connection}");
     }
   }
 }

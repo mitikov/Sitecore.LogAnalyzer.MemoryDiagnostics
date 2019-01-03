@@ -11,23 +11,22 @@
   /// <summary>
   /// Base invoker with image and <see cref="PickDumpDetails"/> form to pick MD file.
   /// <para>Derived classes must implement <see cref="Name"/> property.</para>
+  /// <para>Modules are registered in Sitecore.config and picked by <see cref="Name"/>, so it is important that each custom module has matching name here and in config.</para>
   /// </summary>
-  /// <seealso cref="Sitecore.LogAnalyzer.Presentation.Invokers.IVisibleSourceInvoker" />
+  /// <seealso cref="IVisibleSourceInvoker" />
   public abstract class AbstractDumpInvoker : IVisibleSourceInvoker
   {
     /// <summary>
     /// The pick dump details form.
-    /// <para>Constructs <see cref="MDFileConnection"/>.</para>
+    /// <para>Constructs <see cref="MDFileConnection"/> - carries path to snapshot and mscord.</para>
+    /// <para>In other words - all the data you need to load ClrRuntime.</para>
     /// </summary>
     protected PickDumpDetails PickDumpDetailsForm = new PickDumpDetails();
 
     /// <summary>
     /// Initializes a new instance of the <see cref="AbstractDumpInvoker"/> class.
     /// </summary>
-    protected AbstractDumpInvoker()
-    {
-      this.Image = Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.Resources.Image;
-    }
+    protected AbstractDumpInvoker() => Image = Resources.Image;
 
     /// <summary>
     /// Occurs when [cancel].
@@ -64,21 +63,21 @@
     /// </summary>
     public virtual void Invoke()
     {
-      if (this.PickDumpDetailsForm.ShowDialog() == DialogResult.OK)
+      if (PickDumpDetailsForm.ShowDialog() == DialogResult.OK)
       {
-        var connection = this.PickDumpDetailsForm.FileConnection;
+        var connection = PickDumpDetailsForm.FileConnection;
 
         var lower = DateTime.UtcNow.AddYears(-1);
         var upper = DateTime.UtcNow.AddYears(+1);
         var lowerUpperDateTimePair = new Tuple<DateTime, DateTime>(lower, upper);
 
-        this.OnDateFilterChanged(new EventArgs<Tuple<DateTime, DateTime>>(lowerUpperDateTimePair));
+        OnDateFilterChanged(new EventArgs<Tuple<DateTime, DateTime>>(lowerUpperDateTimePair));
 
-        this.OnDone(new EventArgs<IConnectionSettings>(connection));
+        OnDone(new EventArgs<IConnectionSettings>(connection));
       }
       else
       {
-        this.OnCancel();
+        OnCancel();
       }
     }
 
@@ -87,7 +86,7 @@
     /// </summary>
     protected virtual void OnCancel()
     {
-      this.Cancel?.Invoke(this, EventArgs.Empty);
+      Cancel?.Invoke(this, EventArgs.Empty);
     }
 
     /// <summary>
@@ -95,9 +94,7 @@
     /// </summary>
     /// <param name="e">The <see cref="EventArgs{Tuple{DateTime, DateTime}}"/> instance containing the event data.</param>
     protected virtual void OnDateFilterChanged(EventArgs<Tuple<DateTime, DateTime>> e)
-    {
-      this.DateFilterChanged?.Invoke(this, e);
-    }
+      => DateFilterChanged?.Invoke(this, e);
 
     /// <summary>
     /// Raises the <see cref="E:Done"/> event.
@@ -106,7 +103,7 @@
     /// <param name="e">The <see cref="EventArgs{IConnectionSettings}"/> instance containing the event data.</param>
     protected virtual void OnDone(EventArgs<IConnectionSettings> e)
     {
-      var handler = this.Done;
+      var handler = Done;
       handler?.Invoke(this, e);
     }
   }

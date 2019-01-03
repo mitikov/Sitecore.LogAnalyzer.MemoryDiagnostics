@@ -18,7 +18,7 @@
     {
       using (new LongRunningOperationWatcher("Setting parent child elements", 200))
       {
-        this.SetParentWherePossible(items);
+        SetParentWherePossible(items);
       }
 
       base.ProcessClrObjectEntries(items, result, selecter);

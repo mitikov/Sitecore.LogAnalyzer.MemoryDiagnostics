@@ -88,8 +88,6 @@
     <Compile Include="DumpProcessors\DefaultDumpProcessor.cs" />
     <Compile Include="DumpProcessors\DumpHeapStatProcessor.cs" />
     <Compile Include="DumpProcessors\LiveDeadHeapStatsProcessor.cs" />
-    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\Caches\PrefetchCacheEntryTransformProvider.cs" />
-    <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\Caches\Statistics\MeasureImpactOfRemovingLang.cs" />
     <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\ClrObjectTranformProvider.cs" />
     <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\Caches\CacheEntryTransformProvider.cs" />
     <Compile Include="ClrObjToLogEntryTransformations\TransformationProviders\HaveChildEntriesTransformationProvider.cs" />
@@ -155,7 +153,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       <SubType>Designer</SubType>
-      <CustomToolNamespace>Sitecore.SCLA.MemoryDiagnostics</CustomToolNamespace>
+      <CustomToolNamespace>Sitecore.LogAnalyzer.MemoryDiagnostics.Connector</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

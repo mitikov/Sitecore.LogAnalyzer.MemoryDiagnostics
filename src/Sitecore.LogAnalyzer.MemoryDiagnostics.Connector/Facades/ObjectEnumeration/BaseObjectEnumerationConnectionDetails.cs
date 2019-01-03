@@ -23,9 +23,9 @@
     /// <param name="objectEnumeration">The object enumeration.</param>
     public BaseObjectEnumerationConnectionDetails(IClrRuntimeFactory runtimeFactory, IObjectEnumerationFacade objectEnumeration)
     {
-      this.RuntimeFactory = runtimeFactory;
-      this.ClrObjectEnumerator = objectEnumeration.ClrObjectEnumerator;
-      this.FilteredObjectsProvider = objectEnumeration.FilteredObjectsProvider;
+      RuntimeFactory = runtimeFactory;
+      ClrObjectEnumerator = objectEnumeration.ClrObjectEnumerator;
+      FilteredObjectsProvider = objectEnumeration.FilteredObjectsProvider;
     }
 
     public virtual IEnumerateClrObjectsFromClrRuntime ClrObjectEnumerator { get; }
@@ -36,7 +36,7 @@
 
     public IEnumerable<ClrObject> ExtractFromRuntime(ClrRuntime ds)
     {
-      return this.FilteredObjectsProvider.ExtractFromRuntime(ds, this.ClrObjectEnumerator);
+      return FilteredObjectsProvider.ExtractFromRuntime(ds, ClrObjectEnumerator);
     }
 
     /// <summary>
@@ -46,8 +46,8 @@
     /// <returns>Filtered <see cref="ClrObject"/>s from connection details.</returns>
     public IEnumerable<ClrObject> ExtractFromConnectionDetails(MemoryDumpConnectionDetails connectionDetailsWithName)
     {
-      var runtime = this.RuntimeFactory.BuildClrRuntime(connectionDetailsWithName);
-      return this.ExtractFromRuntime(runtime);
+      var runtime = RuntimeFactory.BuildClrRuntime(connectionDetailsWithName);
+      return ExtractFromRuntime(runtime);
     }
   }
 }

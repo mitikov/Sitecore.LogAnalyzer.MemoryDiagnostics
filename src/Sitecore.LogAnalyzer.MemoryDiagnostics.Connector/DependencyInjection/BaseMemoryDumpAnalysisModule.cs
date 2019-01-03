@@ -44,13 +44,13 @@
     /// </summary>
     public override void Load()
     {
-      this.RegisterLogAnalyzerSpecific();
+      RegisterLogAnalyzerSpecific();
 
-      this.RegisterObjectEnumeration();
+      RegisterObjectEnumeration();
 
-      this.RegisterClrModelToLogEntryDependencies();
+      RegisterClrModelToLogEntryDependencies();
 
-      this.RegisterDumpProcessorDependencies();             
+      RegisterDumpProcessorDependencies();             
     }
 
     /// <summary>
@@ -60,7 +60,7 @@
     /// </summary>
     protected virtual void RegisterDumpProcessorDependencies()
     {      
-      this.Rebind<ILogProcessor>().To<DiDumpProcessor>().InSingletonScope();      
+      Rebind<ILogProcessor>().To<DiDumpProcessor>().InSingletonScope();      
     }
 
     /// <summary>
@@ -72,13 +72,13 @@
     /// </summary>
     protected virtual void RegisterClrModelToLogEntryDependencies()
     {
-      this.Rebind<IInitLogEntryFields>().ToConstant(LogEntryFieldInitializer.Singleton);
+      Rebind<IInitLogEntryFields>().ToConstant(LogEntryFieldInitializer.Singleton);
 
-      this.Rebind<IModelMappingFilter>().ToConstant(EmptyModelMappingFilter.Instance).InSingletonScope();      
+      Rebind<IModelMappingFilter>().ToConstant(EmptyModelMappingFilter.Instance).InSingletonScope();      
 
-      this.Rebind<IModelMapperFactory>().To<LazyLoadModelMapperFactory>().InSingletonScope();
+      Rebind<IModelMapperFactory>().To<LazyLoadModelMapperFactory>().InSingletonScope();
 
-      this.Rebind<IClrObjectTransformator>().To<ClrObjectTranformProvider>();
+      Rebind<IClrObjectTransformator>().To<ClrObjectTranformProvider>();
     }
 
     /// <summary>
@@ -87,15 +87,15 @@
     /// </summary>
     protected virtual void RegisterObjectEnumeration()
     {
-      this.Rebind<IEnumeratiorConnection>().To<BaseObjectEnumerationConnectionDetails>();
+      Rebind<IEnumeratiorConnection>().To<BaseObjectEnumerationConnectionDetails>();
 
-      this.Rebind<IClrRuntimeFactory>().To<MDClrRuntimeFactory>().InSingletonScope();
+      Rebind<IClrRuntimeFactory>().To<MDClrRuntimeFactory>().InSingletonScope();
 
-      this.Rebind<IEnumerateClrObjectsFromClrRuntime>().ToConstant(ManagedTheadPoolWorkersThreadEnumerator.Instance).InSingletonScope();
+      Rebind<IEnumerateClrObjectsFromClrRuntime>().ToConstant(ManagedTheadPoolWorkersThreadEnumerator.Instance).InSingletonScope();
 
-      this.Rebind<IFilteredObjectsProvider>().ToConstant(NullFilterClrObjectProvider.Instance).InSingletonScope();
+      Rebind<IFilteredObjectsProvider>().ToConstant(NullFilterClrObjectProvider.Instance).InSingletonScope();
 
-      this.Rebind<IObjectEnumerationFacade>().To<DefaultObjectEnumerationFacade>().InSingletonScope();
+      Rebind<IObjectEnumerationFacade>().To<DefaultObjectEnumerationFacade>().InSingletonScope();
     }
 
     /// <summary>
@@ -104,11 +104,11 @@
     /// </summary>                                            
     protected virtual void RegisterLogAnalyzerSpecific()
     {
-      this.Rebind<ILogAnalyzerFacade>().To<BaseSCLAFacade>().InSingletonScope();
+      Rebind<ILogAnalyzerFacade>().To<BaseSCLAFacade>().InSingletonScope();
 
-      // TODO: think if we need this.
-      this.Rebind<IContextFactory>().ToConstant(EmptyContextFactory.Instance).InSingletonScope();
-      this.Rebind<ICaptionManager>().To<CaptionManager>().InSingletonScope();
+      // TODO: think if we need 
+      Rebind<IContextFactory>().ToConstant(EmptyContextFactory.Instance).InSingletonScope();
+      Rebind<ICaptionManager>().To<CaptionManager>().InSingletonScope();
     }
   }
 }

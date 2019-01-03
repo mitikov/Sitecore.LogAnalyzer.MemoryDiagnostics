@@ -1,21 +1,20 @@
 ﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector
 {
   using System;
-  using System.Threading;
   using Assert = Sitecore.LogAnalyzer.Assert;
 
   public sealed class MemoryUsageWatcher : IDisposable
   {
     #region fields
-    protected Action<string> messageOutput;
+    private Action<string> messageOutput;
 
-    protected long _startRAM;
+    private readonly long _startRAM;
 
-    protected int flag;
+    private bool disposed;
 
-    protected string Message;
+    private readonly string _message;
 
-    protected int ThreshHoldMb;
+    private readonly int _threshHoldMegabytes;
     #endregion
 
     /// <summary>
@@ -26,39 +25,28 @@
     /// <param name="printer">The printer.</param>
     public MemoryUsageWatcher(string message, int threshHoldMB = 15, Action<string> printer = null)
     {
-      Assert.ArgumentNotNullOrEmpty(message, "No message provided");
-      this.messageOutput = printer ?? LogAnalyzer.Context.Message;
+      Assert.ArgumentNotNullOrEmpty(message, nameof(message));
 
-      this._startRAM = GC.GetTotalMemory(false);
-      this.ThreshHoldMb = threshHoldMB;
-      this.Message = message;
-      Thread.VolatileWrite(ref this.flag, 1);
+      messageOutput = printer ?? Context.Message;
+
+      _startRAM = GC.GetTotalMemory(forceFullCollection: false);
+      _threshHoldMegabytes = threshHoldMB;
+      _message = message;
+
     }
 
-    public void Dispose()
+    void IDisposable.Dispose()
     {
-      this._Dispose(false);
-    }
-
-    ~MemoryUsageWatcher()
-    {
-      this._Dispose(true);
-    }
-
-    private void _Dispose(bool isFinalizeCall)
-    {
-      if (Interlocked.CompareExchange(ref flag, 0, 1) == 0)
+      if (disposed)
       {
         return;
       }
-      var msSpend = (GC.GetTotalMemory(false) - _startRAM) / (1024 * 1024);
-      if (msSpend >= ThreshHoldMb)
-        messageOutput(Message + " used " + msSpend + " MB");
 
-      if (!isFinalizeCall)
-        GC.SuppressFinalize(this);
+      disposed = true;
 
-      messageOutput = null;
+      var megabytes = (GC.GetTotalMemory(false) - _startRAM) / (1024 * 1024);
+      if (megabytes >= _threshHoldMegabytes)
+        messageOutput($"{_message} used {megabytes} MB");
     }
   }
 }

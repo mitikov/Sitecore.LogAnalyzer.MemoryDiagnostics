@@ -58,19 +58,19 @@
     [CanBeNull]
     public virtual LogEntry BuildCandidate([NotNull]ClrRuntime clrRuntime, ClrObject clrObject, out LogEntry[] nested)
     {
-      var mapping = this.ModelMapperFactory.BuildModel(clrObject);
+      var mapping = ModelMapperFactory.BuildModel(clrObject);
 
-      if (!this.Filter.Matches(mapping))
+      if (!Filter.Matches(mapping))
       {
         nested = null;
         return null;
       }
 
-      var result = new ClrObjLogEntry(mapping, this.Storage);
+      var result = new ClrObjLogEntry(mapping, Storage);
       result.InitFldsFromModel();
 
-      this.LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(result);
-      nested = this.GetNestedObjects(clrRuntime, clrObject, mapping, result);
+      LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(result);
+      nested = GetNestedObjects(clrRuntime, clrObject, mapping, result);
       if (nested != null)
       {
         foreach (var logEntry in nested)
@@ -80,7 +80,7 @@
           {
             continue;
           }
-          this.LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(casted);
+          LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(casted);
         }
       }
 
@@ -102,13 +102,11 @@
     /// <param name="parentEntry">The <paramref name="clrObject"/> resulting SCLA representation.</param>
     /// <returns>An array of elements nested inside clrObject.<value>Null</value>  is ok.</returns>
     [CanBeNull]
-    public virtual LogEntry[] GetNestedObjects([NotNull]ClrRuntime clrRuntime, ClrObject clrObject, IClrObjMappingModel mapping, ClrObjLogEntry parentEntry)
-    {
-      return null;
-    }
+    public virtual LogEntry[] GetNestedObjects([NotNull]ClrRuntime clrRuntime, ClrObject clrObject, IClrObjMappingModel mapping, ClrObjLogEntry parentEntry) => null;
 
     /// <summary>
     /// Transforms <paramref name="casted"/> to <see cref="ClrObjLogEntry"/> without any transformation.
+    /// <para>Suitable place to place any logic to apply for model - to entry transformation time.</para>
     /// </summary>
     /// <param name="parentEntry">The parent entry.</param>
     /// <param name="casted">The casted.</param>
@@ -116,7 +114,7 @@
     [CanBeNull]
     protected virtual ClrObjLogEntry ModelToClrObjLogEntry(ClrObjLogEntry parentEntry, IClrObjMappingModel casted)
     {
-      var entry = new ClrObjLogEntry(casted, this.Storage, parentEntry);
+      var entry = new ClrObjLogEntry(casted, Storage, parentEntry);
 
       entry.InitFldsFromModel();
 
@@ -124,6 +122,5 @@
     }
 
     #endregion
-
   }
 }

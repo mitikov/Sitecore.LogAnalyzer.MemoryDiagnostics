@@ -4,7 +4,6 @@
   using Sitecore.MemoryDiagnostics;
   using Sitecore.MemoryDiagnostics.ModelMetadataInterfaces;
   using Sitecore;
-  using Sitecore.Diagnostics;
 
   /// <summary>
   /// Represents per-type statistics of object instances in heap.
@@ -34,11 +33,11 @@
     #region Constructors
     public HeapStatEntry([NotNull] string typeName)
     {
-      Assert.ArgumentNotNullOrEmpty(typeName, "typeName");
-      this.Count = 0;
-      this.Size = 0;
-      this.Name = typeName;
-      this.hash = this.Name.GetHashCode();
+      Assert.ArgumentNotNullOrEmpty(typeName, nameof(typeName));
+      Count = 0;
+      Size = 0;
+      Name = typeName;
+      hash = Name.GetHashCode();
     }
 
     #endregion
@@ -46,7 +45,7 @@
     /// <summary>
     /// A brief instance description
     /// </summary>
-    public virtual string Caption => $"{Sitecore.MemoryDiagnostics.StringUtil.StripNamespaceFromTypeFullName(this.Name)} hits {this.Count}";
+    public virtual string Caption => $"{Sitecore.MemoryDiagnostics.StringUtil.StripNamespaceFromTypeFullName(Name)} hits {Count}";
 
     /// <summary>
     /// Gets the <see cref="DateTime"/> ( for sorting purposes ).
@@ -54,7 +53,7 @@
     /// <value>
     /// The datetime.
     /// </value>
-    public virtual DateTime Datetime => DateTime.Today.AddSeconds(this.Count);
+    public virtual DateTime Datetime => DateTime.Today.AddSeconds(Count);
     #endregion
 
     #region Object overrided methods
@@ -64,15 +63,9 @@
     /// <returns>
     /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
     /// </returns>
-    public override int GetHashCode() => this.hash;
+    public override int GetHashCode() => hash;
 
-    /// <summary>
-    /// Returns a <see cref="System.String" /> that represents this instance.
-    /// </summary>
-    /// <returns>
-    /// A <see cref="System.String" /> that represents this instance.
-    /// </returns>
-    public override string ToString() => $"{Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(this.Size),4:n0} {this.Count,4:0} {this.Name}";   
+    public override string ToString() => $"{Sitecore.MemoryDiagnostics.StringUtil.GetSizeString(Size),4:n0} {Count,4:0} {Name}";   
     #endregion
   }
 }

@@ -1,80 +1,56 @@
 ﻿using System;
-using System.Threading;
 using Sitecore.Diagnostics;
-using Sitecore.LogAnalyzer;
-using Assert = Sitecore.LogAnalyzer.Assert;
 
 namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector
 {
   /// <summary>
   /// Outputs message in case operation took more than specified threshhold.
   /// </summary>
-  public class LongRunningOperationWatcher:IDisposable
+  public class LongRunningOperationWatcher : IDisposable
   {
-    protected Action<string> messageOutput;
-    protected long _startTicks;
-    protected int disposeFlag;
-    protected string Message;
-    protected int ThreshHoldMs;
+    private bool _disposed;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="LongRunningOperationWatcher"/> class.
     /// </summary>
     /// <param name="message">The message.</param>
     /// <param name="threshHoldMs">The thresh hold ms.</param>
-    /// <param name="printer">The printer.</param>
-    public LongRunningOperationWatcher(string message,int threshHoldMs = 40, Action<string> printer = null)
+    /// <param name="printer">The printer funtion to output message.</param>
+    public LongRunningOperationWatcher(string message, int threshHoldMs = 40, Action<string> printer = null)
     {
-      Assert.ArgumentNotNullOrEmpty(message, "No message provided");
-      this.messageOutput = printer ?? LogAnalyzer.Context.Message;
+      Assert.ArgumentNotNullOrEmpty(message, nameof(message));
+      MessagePrinter = printer ?? Context.Message;
 
-      this._startTicks = HighResTimer.GetTick();
-      this.ThreshHoldMs = threshHoldMs;
-      this.Message = message;
-
-      Thread.VolatileWrite(ref this.disposeFlag, 1);
+      StartTicks = HighResTimer.GetTick();
+      ThreshHoldMs = threshHoldMs;
+      Message = message;
     }
 
-    /// <summary>
-    /// Finalizes an instance of the <see cref="LongRunningOperationWatcher"/> class.
-    /// </summary>
-    ~LongRunningOperationWatcher()
-    {
-      this.Dispose(true);
-    }
+    protected Action<string> MessagePrinter { get; private set; }
+
+    protected long StartTicks { get; private set; }
+
+    protected string Message { get; private set; }
+
+    protected int ThreshHoldMs { get; private set; }
 
     /// <summary>
     /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
     /// </summary>
-    public void Dispose()
-    {      
-      this.Dispose(false);     
-    }
-
-    /// <summary>
-    /// Disposes the specified is finalize call.
-    /// </summary>
-    /// <param name="isFinalizeCall">if set to <c>true</c> [is finalize call].</param>
-    private void Dispose(bool isFinalizeCall)
+    void IDisposable.Dispose()
     {
-      if (Interlocked.CompareExchange(ref this.disposeFlag, 0, 1) == 0)
+      if (_disposed)
       {
         return;
       }
+      _disposed = true;
 
-      var msSpend = (int)Math.Floor(HighResTimer.GetMillisecondsSince(this._startTicks));
+      var msSpend = (int)Math.Floor(HighResTimer.GetMillisecondsSince(StartTicks));
 
-      if (msSpend >= this.ThreshHoldMs)
+      if (msSpend >= ThreshHoldMs)
       {
-        this.messageOutput($"{this.Message} in {msSpend} ms.");
+        MessagePrinter($"{Message} in {msSpend} ms.");
       }
-
-      if (!isFinalizeCall)
-      {
-        GC.SuppressFinalize(this);
-      }
-
-      this.messageOutput = null;
     }
   }
 }

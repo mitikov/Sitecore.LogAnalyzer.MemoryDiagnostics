@@ -11,25 +11,28 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTrans
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTransformations.Interfaces;
   using SitecoreMemoryInspectionKit.Core.ClrHelpers;
 
+  /// <summary>
+  /// Understands <see cref="MongoConnectionPoolMappingModel"/> and puts connections as nested objects.
+  /// </summary>
   public class MongoConnectionPoolTransformProvider : ClrObjectTranformProvider
   {
-    public MongoConnectionPoolTransformProvider(IModelMapperFactory modelMapperFactory, IInitLogEntryFields logEntryFieldsInitializer, IModelMappingFilter filter) : base(modelMapperFactory, logEntryFieldsInitializer, filter)
+    public MongoConnectionPoolTransformProvider(IModelMapperFactory modelMapperFactory, IInitLogEntryFields logEntryFieldsInitializer, IModelMappingFilter filter) 
+      : base(modelMapperFactory, logEntryFieldsInitializer, filter)
     {
     }
 
     public override LogEntry[] GetNestedObjects(ClrRuntime clrRuntime, ClrObject clrObject, IClrObjMappingModel mapping, ClrObjLogEntry parentEntry)
     {
-      var poolMapping = mapping as MongoConnectionPoolMappingModel;
-      if ((poolMapping == null) || poolMapping._availableConnections.IsEmpty)
+      if ((!(mapping is MongoConnectionPoolMappingModel mongoPool)) || mongoPool._availableConnections.IsEmpty)
       {
         return null;
       }
 
       var result = new List<LogEntry>();
 
-      foreach (IClrObjMappingModel availableConnection in poolMapping._availableConnections)
+      foreach (IClrObjMappingModel availableConnection in mongoPool._availableConnections)
       {
-        var entry = this.ModelToClrObjLogEntry(parentEntry, availableConnection);
+        var entry = ModelToClrObjLogEntry(parentEntry, availableConnection);
         if (entry != null)
         {
           result.Add(entry);

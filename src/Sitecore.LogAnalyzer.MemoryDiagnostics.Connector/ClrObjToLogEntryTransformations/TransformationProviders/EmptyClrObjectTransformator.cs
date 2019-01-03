@@ -4,6 +4,7 @@
   using Sitecore.LogAnalyzer.Models;
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.ClrObjToLogEntryTransformations.Interfaces;
   using SitecoreMemoryInspectionKit.Core.ClrHelpers;
+  using System;
 
   /// <summary>
   /// Does nothing, returns <c>null</c> always.
@@ -13,9 +14,7 @@
   {
     public LogEntry BuildCandidate(ClrRuntime clrRuntime, ClrObject clrObject, out LogEntry[] nested)
     {
-      nested = new LogEntry[]
-      {
-      };
+      nested = Array.Empty<LogEntry>();
       return null;
     }
   }

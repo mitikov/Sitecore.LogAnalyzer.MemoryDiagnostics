@@ -13,26 +13,25 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector
   /// </summary>
   public class DiBindings : BaseMemoryDumpAnalysisModule
   {
-
     protected override void RegisterLogAnalyzerSpecific()
     {
       base.RegisterLogAnalyzerSpecific();
 
-      this.Rebind<ICaptionManager>().To<ClrObjCaptionManager>().InSingletonScope();
+      Rebind<ICaptionManager>().To<ClrObjCaptionManager>().InSingletonScope();
     }
 
     protected override void RegisterObjectEnumeration()
     {
       base.RegisterObjectEnumeration();
 
-      this.Rebind<IEnumerateClrObjectsFromClrRuntime>().To<HeapBasedClrObjectEnumerator>().InSingletonScope();
+      Rebind<IEnumerateClrObjectsFromClrRuntime>().To<HeapBasedClrObjectEnumerator>().InSingletonScope();
 
-      this.Rebind<IFilteredObjectsProvider>()
+      Rebind<IFilteredObjectsProvider>()
         .To<FilteredObjectProviderByTypeName>()
         .InSingletonScope()
         .WithConstructorArgument("typeName", "Sitecore.Caching.Cache");
 
-      this.Rebind<IObjectEnumerationFacade>().To<DefaultObjectEnumerationFacade>().InSingletonScope();
+      Rebind<IObjectEnumerationFacade>().To<DefaultObjectEnumerationFacade>().InSingletonScope();
     }
   }
 }

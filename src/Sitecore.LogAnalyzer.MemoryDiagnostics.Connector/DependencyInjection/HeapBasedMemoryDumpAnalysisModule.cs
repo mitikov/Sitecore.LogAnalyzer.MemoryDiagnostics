@@ -6,7 +6,7 @@
   using SitecoreMemoryInspectionKit.Core.ClrHelpers;
 
   /// <summary>
-  /// <para>Registers heap as object enumerator.</para>
+  /// <para>Registers heap as object enumerator on top of <see cref="BaseMemoryDumpAnalysisModule"/>.</para>
   /// </summary>
   /// <seealso cref="BaseMemoryDumpAnalysisModule" />
   public abstract class HeapBasedMemoryDumpAnalysisModule : BaseMemoryDumpAnalysisModule
@@ -20,7 +20,7 @@
     {
       base.RegisterObjectEnumeration();
 
-      this.Rebind<IEnumerateClrObjectsFromClrRuntime>().To<HeapBasedClrObjectEnumerator>().InSingletonScope();
+      Rebind<IEnumerateClrObjectsFromClrRuntime>().To<HeapBasedClrObjectEnumerator>().InSingletonScope();
     }
   }
 }

@@ -1,4 +1,4 @@
-﻿namespace Sitecore.SCLA.AssemblySaver
+﻿namespace Sitecore.LogAnalyzer.MemoryDiagnostics.CallstackGrouper
 {
   using Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.DependencyInjection;
 

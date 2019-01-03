@@ -19,11 +19,6 @@
   /// <seealso cref="MD.JulyPowered.DumpProcessors.DiDumpProcessor" />
   public class NamedFilterDrivenProcessor : DiDumpProcessor
   {
-    #region fields    
-
-    #endregion
-
-    #region constructor
     /// <summary>
     /// Initializes a new instance of the <see cref="NamedFilterDrivenProcessor"/> class.
     /// </summary>
@@ -32,16 +27,10 @@
     /// <param name="clrObjToLogEntryTransformProvider">The object to log entry transform provider.</param>
     public NamedFilterDrivenProcessor(ILogAnalyzerFacade logAnalyzerFacade, IEnumeratiorConnection objectEnumerationConnection, IClrObjectTransformator clrObjToLogEntryTransformProvider) : base(logAnalyzerFacade, objectEnumerationConnection, clrObjToLogEntryTransformProvider)
     {
-      this.ClrObjectEnumerator = objectEnumerationConnection;
+      ClrObjectEnumerator = objectEnumerationConnection;
     }
 
-    #endregion
-
-    #region Properties    
-
     protected override IEnumeratiorConnection ClrObjectEnumerator { get; }
-
-    #endregion
 
     protected override void OnPreBuildParsingResult(ClrRuntime clrRuntime, ProcessContext context)
     {
@@ -49,9 +38,9 @@
 
       Assert.OfType<INameProvider>(connection, typeof(INameProvider), nameof(context.Settings.ConnectionSettings));
 
-      var filterName = this.GetfilterName(connection);
+      var filterName = GetfilterName(connection);
 
-      var filterObjProvider = this.ClrObjectEnumerator.FilteredObjectsProvider;
+      var filterObjProvider = ClrObjectEnumerator.FilteredObjectsProvider;
 
       Assert.OfType<INameProvider>(filterObjProvider, typeof(INameProvider), nameof(filterObjProvider));
 
@@ -65,9 +54,6 @@
     /// </summary>
     /// <param name="connection">The connection.</param>
     /// <returns>name extracted from connection details.</returns>
-    protected virtual string GetfilterName(IConnectionSettings connection)
-    {
-      return ((INameProvider)connection).Name;
-    }
+    protected virtual string GetfilterName(IConnectionSettings connection) => ((INameProvider)connection).Name;
   }
 }

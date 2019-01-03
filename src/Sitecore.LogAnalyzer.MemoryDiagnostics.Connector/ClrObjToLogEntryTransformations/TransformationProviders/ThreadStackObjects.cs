@@ -34,7 +34,7 @@
     {
       Assert.ArgumentNotNull(stackObjectFilter, nameof(stackObjectFilter));
 
-      this.StackObjectFilter = stackObjectFilter;
+      StackObjectFilter = stackObjectFilter;
     }
 
     #endregion
@@ -52,20 +52,20 @@
         return null;
       }
 
-      var threadMappingModel = this.BuildThreadModel(clrRuntime, thread);
+      var threadMappingModel = BuildThreadModel(clrRuntime, thread);
 
       using (new HashtableEnumerationLimitContext(100))
       {
-        ClrObjLogEntry threadLogEntryModel = this.BuildLogEntry(threadMappingModel);
+        ClrObjLogEntry threadLogEntryModel = BuildLogEntry(threadMappingModel);
 
-        nested = this.GetNestedObjects(clrRuntime, threadMappingModel.Obj, threadMappingModel, threadLogEntryModel);
+        nested = GetNestedObjects(clrRuntime, threadMappingModel.Obj, threadMappingModel, threadLogEntryModel);
 
         if (nested != null)
         {
           GCSettings.LargeObjectHeapCompactionMode = GCLargeObjectHeapCompactionMode.CompactOnce;
           foreach (var logEntry in nested.OfType<ClrObjLogEntry>())
           {
-            this.LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(logEntry);
+            LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(logEntry);
           }
         }
 
@@ -79,7 +79,7 @@
                     where matchingThread.Address.Equals(clrTheadObject.Address)
                     select matchingThread).FirstOrDefault();
 
-      return this.BuildCandidate(clrRuntime, thread, out nested);
+      return BuildCandidate(clrRuntime, thread, out nested);
     }
 
     protected virtual ClrObjLogEntry BuildLogEntry(ThreadMappingModel threadMappingModel)
@@ -94,7 +94,7 @@
       threadLogEntryModel.InitFldsFromModel();
       threadLogEntryModel.Text = threadMappingModel.StackTrace;
 
-      this.LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(threadLogEntryModel);
+      LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(threadLogEntryModel);
 
       return threadLogEntryModel;
     }
@@ -117,9 +117,9 @@
         return null;
       }
 
-      var nested = this.FetchThreadStackObjects(clrRuntime, casted.Thread);
+      var nested = FetchThreadStackObjects(clrRuntime, casted.Thread);
 
-      return this.ProcessNested(nested, parentEntry);
+      return ProcessNested(nested, parentEntry);
     }
 
     protected virtual ICollection<ClrObject> FetchThreadStackObjects(ClrRuntime clrRuntime, [NotNull] ClrThread thread)
@@ -195,7 +195,7 @@
         {
           entry.InitFldsFromModel();
           entry.Caption = entry.Caption;
-          this.LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(entry);
+          LogEntryFieldsInitializer.ApplyCustomLogicOnLogEntry(entry);
         }
         catch (Exception ex)
         {

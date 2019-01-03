@@ -23,7 +23,7 @@
     /// <param name="pathToMsCorDacwks">The path to mscord.</param>
     public MemoryDumpFileBasedConnectionWithName(string name, string pathToDump, string pathToMsCorDacwks) : base(pathToDump, pathToMsCorDacwks)
     {
-      this.name = name;
+      name = name;
     }
 
     /// <summary>
@@ -32,7 +32,7 @@
     /// <value>
     /// The connection details string.
     /// </value>
-    public override string ConnectionDetailsString => $"{this.Name}|{base.ConnectionDetailsString}";
+    public override string ConnectionDetailsString => $"{Name}|{base.ConnectionDetailsString}";
 
     /// <summary>
     /// Gets or sets the name carried by the instance.
@@ -45,12 +45,12 @@
     {
       get
       {
-        return this.name;
+        return name;
       }
 
       set
       {
-        this.name = value;
+        name = value;
       }
     }
   }

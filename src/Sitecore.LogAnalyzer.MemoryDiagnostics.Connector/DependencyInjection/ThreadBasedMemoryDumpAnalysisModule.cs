@@ -17,23 +17,23 @@ namespace Sitecore.LogAnalyzer.MemoryDiagnostics.Connector.DependencyInjection
     {
       base.RegisterDumpProcessorDependencies();
 
-      this.Rebind<IFilter<ClrThread>>().To<NoThreadFiltering>().InSingletonScope();
+      Rebind<IFilter<ClrThread>>().To<NoThreadFiltering>().InSingletonScope();
 
-      this.Rebind<IFilter<ClrObject>>().To<BlacklistObjectFilter>().InSingletonScope();
+      Rebind<IFilter<ClrObject>>().To<BlacklistObjectFilter>().InSingletonScope();
 
-      this.Rebind<ILogProcessor>().To<ClrThreadDumpProcessor>().InSingletonScope();
+      Rebind<ILogProcessor>().To<ClrThreadDumpProcessor>().InSingletonScope();
     }
 
     protected override void RegisterLogAnalyzerSpecific()
     {
       base.RegisterLogAnalyzerSpecific();
-      this.Rebind<ICaptionManager>().To<ClrObjCaptionManager>().InSingletonScope();
+      Rebind<ICaptionManager>().To<ClrObjCaptionManager>().InSingletonScope();
     }
 
     protected override void RegisterClrModelToLogEntryDependencies()
     {
       base.RegisterClrModelToLogEntryDependencies();
-      this.Rebind<IClrObjectTransformator>().To<ExtractThreadStaticObjects>().InSingletonScope();
+      Rebind<IClrObjectTransformator>().To<ExtractThreadStaticObjects>().InSingletonScope();
     }
   }
   }

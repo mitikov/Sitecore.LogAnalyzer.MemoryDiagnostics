@@ -11,7 +11,7 @@
   {
     public virtual LogLevel SetLevel(LiveDeadHeapStatEntry entry)
     {
-      if (entry.Count < this.MinimumObjectCount)
+      if (entry.Count < MinimumObjectCount)
       {
         return LogLevel.DEBUG;
       }

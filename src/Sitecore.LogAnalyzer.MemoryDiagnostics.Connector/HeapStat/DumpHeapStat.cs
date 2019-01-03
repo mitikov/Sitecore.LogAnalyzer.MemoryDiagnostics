@@ -34,7 +34,7 @@
 
         ulong size = type.GetSize(obj);
 
-        if (this.WrongSize(size))
+        if (WrongSize(size))
         {
           continue;
         }
@@ -53,7 +53,7 @@
         entry.Size += size;
       }
 
-      return this.SetOrder(stats.Values);
+      return SetOrder(stats.Values);
     }
 
     protected virtual bool WrongSize(ulong size) => size < 85000 ;
