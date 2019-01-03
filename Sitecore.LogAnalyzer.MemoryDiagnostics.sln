@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.LogAnalyzer.Memory
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.LogAnalyzer.MemoryDiagnostics.ThreadCallStacks", "src\Sitecore.LogAnalyzer.MemoryDiagnostics.ThreadCallStacks\Sitecore.LogAnalyzer.MemoryDiagnostics.ThreadCallStacks.csproj", "{CA21EE39-B955-49A9-9CE9-4BB733422245}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.LogAnalyzer.MemoryDiagnostics.SqlCommandViewerSqlCommandViewer", "src\Sitecore.LogAnalyzer.MemoryDiagnostics.SqlCommandViewer\Sitecore.LogAnalyzer.MemoryDiagnostics.SqlCommandViewerSqlCommandViewer.csproj", "{AF4F4E25-93FB-42CC-989C-7F309CE11746}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sitecore.LogAnalyzer.MemoryDiagnostics.SqlCommandViewer", "src\Sitecore.LogAnalyzer.MemoryDiagnostics.SqlCommandViewer\Sitecore.LogAnalyzer.MemoryDiagnostics.SqlCommandViewer.csproj", "{AF4F4E25-93FB-42CC-989C-7F309CE11746}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
