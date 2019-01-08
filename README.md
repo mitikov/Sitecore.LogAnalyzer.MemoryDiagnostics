@@ -51,3 +51,13 @@ Should you have good ideas, feel free to contribute.
 Niether Sitecore Log Analyzer, nor Memory Diagnostics assemblies are published to nuget - thus we had to copy-paste those, my deepest appologies.
 
 Secondly, the current version of Memory Diagnostics is super-sensitive to field namings, thus whenever field name changes, everything explodes.
+
+### Sample registration
+
+You should add module definition into 'Sitecore.LogAnalyzer.config' by sample :
+
+  <modules>
+
+    <add name="Your Module Name from DI" assembly="Sitecore.SCLA.HTMLCacheViewer">
+      <invoker type="Sitecore.SCLA.HTMLCacheViewer.Invoker, Sitecore.SCLA.HTMLCacheViewer"></invoker>
+    </add>
